@@ -19,7 +19,7 @@
 -->
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-           id="org.apache.cordova.inappbrowser"
+           id="org.apache.cordova.inappbrowserfork"
       version="0.5.1-dev">
 
     <name>InAppBrowser</name>
@@ -36,7 +36,7 @@
     <!-- android -->
     <platform name="android">
         <js-module src="www/inappbrowser.js" name="inappbrowser">
-            <clobbers target="window.open" />
+            <clobbers target="window.openBeta" />
         </js-module>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="InAppBrowser"> 
@@ -69,7 +69,7 @@
     <!-- amazon-fireos -->
     <platform name="amazon-fireos">
         <js-module src="www/inappbrowser.js" name="inappbrowser">
-            <clobbers target="window.open" />
+            <clobbers target="window.openBeta" />
         </js-module>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="InAppBrowser"> 
@@ -84,7 +84,7 @@
     <!-- ubuntu -->
     <platform name="ubuntu">
         <js-module src="www/inappbrowser.js" name="inappbrowser">
-            <clobbers target="window.open" />
+            <clobbers target="window.openBeta" />
         </js-module>
         <header-file src="src/ubuntu/inappbrowser.h" />
         <source-file src="src/ubuntu/inappbrowser.cpp" />
@@ -95,7 +95,7 @@
     <!-- ios -->
     <platform name="ios">
         <js-module src="www/inappbrowser.js" name="inappbrowser">
-            <clobbers target="window.open" />
+            <clobbers target="window.openBeta" />
         </js-module>  
         <config-file target="config.xml" parent="/*">
             <feature name="InAppBrowser">
@@ -116,7 +116,7 @@
         </config-file>
 
         <js-module src="www/inappbrowser.js" name="inappbrowser">
-            <clobbers target="window.open" />
+            <clobbers target="window.openBeta" />
         </js-module>
         <config-file target="config.xml" parent="/*">
             <feature name="InAppBrowser">
@@ -138,7 +138,7 @@
         </config-file>
                 
         <js-module src="www/inappbrowser.js" name="inappbrowser">
-            <clobbers target="window.open" />
+            <clobbers target="window.openBeta" />
         </js-module>
         <config-file target="config.xml" parent="/*">
             <feature name="InAppBrowser">
@@ -156,7 +156,7 @@
     <!-- windows8 -->
     <platform name="windows8">
         <js-module src="www/inappbrowser.js" name="inappbrowser">
-            <clobbers target="window.open" />
+            <clobbers target="window.openBeta" />
         </js-module>
         <js-module src="www/windows8/InAppBrowserProxy.js" name="InAppBrowserProxy">
             <merges target="" />
@@ -169,7 +169,7 @@
             <permission name="browser" description="Enables the app to implement a browser in an iframe." privileged="true"/>
         </config-file>
         <js-module src="www/inappbrowser.js" name="inappbrowser">
-            <clobbers target="window.open" />
+            <clobbers target="window.openBeta" />
         </js-module>
         <js-module src="src/firefoxos/InAppBrowserProxy.js" name="InAppBrowserProxy">
             <merges target="" />
