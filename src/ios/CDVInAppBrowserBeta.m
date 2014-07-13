@@ -66,7 +66,7 @@
 - (void)loadedStatus:(CDVInvokedUrlCommand*)command
 {
     if (self.callbackId != nil) {
-        NSString* loaded = [self.inAppBrowserViewController.webView stringByEvaluatingJavaScriptFromString:@"(document.getElementById('shotbowAppPageLoaded')!=null).toString()"];
+        NSString* loaded = [self.inAppBrowserViewController.webView stringByEvaluatingJavaScriptFromString:@"(document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById('shotbowAppPageLoaded').getAttribute('token') : 'false').toString()"];
 
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                       messageAsDictionary:@{@"type":@"loadedStatus", @"loaded":loaded}];
