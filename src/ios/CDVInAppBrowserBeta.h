@@ -22,13 +22,13 @@
 #import <Cordova/CDVScreenOrientationDelegate.h>
 #import <Cordova/CDVWebViewDelegate.h>
 
-@class CDVInAppBrowserViewController;
+@class CDVInAppBrowserBetaViewController;
 
-@interface CDVInAppBrowser : CDVPlugin {
+@interface CDVInAppBrowserBeta : CDVPlugin {
     BOOL _injectedIframeBridge;
 }
 
-@property (nonatomic, retain) CDVInAppBrowserViewController* inAppBrowserViewController;
+@property (nonatomic, retain) CDVInAppBrowserBetaViewController* inAppBrowserViewController;
 @property (nonatomic, copy) NSString* callbackId;
 @property (nonatomic, copy) NSRegularExpression *callbackIdPattern;
 
@@ -39,7 +39,7 @@
 
 @end
 
-@interface CDVInAppBrowserOptions : NSObject {}
+@interface CDVInAppBrowserBetaOptions : NSObject {}
 
 @property (nonatomic, assign) BOOL location;
 @property (nonatomic, assign) BOOL toolbar;
@@ -59,16 +59,16 @@
 @property (nonatomic, assign) BOOL hidden;
 @property (nonatomic, assign) BOOL disallowoverscroll;
 
-+ (CDVInAppBrowserOptions*)parseOptions:(NSString*)options;
++ (CDVInAppBrowserBetaOptions*)parseOptions:(NSString*)options;
 
 @end
 
-@interface CDVInAppBrowserViewController : UIViewController <UIWebViewDelegate, CDVScreenOrientationDelegate>{
+@interface CDVInAppBrowserBetaViewController : UIViewController <UIWebViewDelegate, CDVScreenOrientationDelegate>{
     @private
     NSString* _userAgent;
     NSString* _prevUserAgent;
     NSInteger _userAgentLockToken;
-    CDVInAppBrowserOptions *_browserOptions;
+    CDVInAppBrowserBetaOptions *_browserOptions;
     CDVWebViewDelegate* _webViewDelegate;
 }
 
@@ -81,7 +81,7 @@
 @property (nonatomic, strong) IBOutlet UIToolbar* toolbar;
 
 @property (nonatomic, weak) id <CDVScreenOrientationDelegate> orientationDelegate;
-@property (nonatomic, weak) CDVInAppBrowser* navigationDelegate;
+@property (nonatomic, weak) CDVInAppBrowserBeta* navigationDelegate;
 @property (nonatomic) NSURL* currentURL;
 
 - (void)close;
@@ -90,11 +90,11 @@
 - (void)showToolBar:(BOOL)show : (NSString *) toolbarPosition;
 - (void)setCloseButtonTitle:(NSString*)title;
 
-- (id)initWithUserAgent:(NSString*)userAgent prevUserAgent:(NSString*)prevUserAgent browserOptions: (CDVInAppBrowserOptions*) browserOptions;
+- (id)initWithUserAgent:(NSString*)userAgent prevUserAgent:(NSString*)prevUserAgent browserOptions: (CDVInAppBrowserBetaOptions*) browserOptions;
 
 @end
 
-@interface CDVInAppBrowserNavigationController : UINavigationController
+@interface CDVInAppBrowserBetaNavigationController : UINavigationController
 
 @property (nonatomic, weak) id <CDVScreenOrientationDelegate> orientationDelegate;
 

@@ -24,7 +24,7 @@ var channel = require('cordova/channel');
 var modulemapper = require('cordova/modulemapper');
 var urlutil = require('cordova/urlutil');
 
-function InAppBrowser() {
+function InAppBrowserBeta() {
    this.channels = {
         'loadstart': channel.create('loadstart'),
         'loadstop' : channel.create('loadstop'),
@@ -33,17 +33,17 @@ function InAppBrowser() {
    };
 }
 
-InAppBrowser.prototype = {
+InAppBrowserBeta.prototype = {
     _eventHandler: function (event) {
         if (event.type in this.channels) {
             this.channels[event.type].fire(event);
         }
     },
     close: function (eventname) {
-        exec(null, null, "InAppBrowser", "close", []);
+        exec(null, null, "InAppBrowserBeta", "close", []);
     },
     show: function (eventname) {
-      exec(null, null, "InAppBrowser", "show", []);
+      exec(null, null, "InAppBrowserBeta", "show", []);
     },
     addEventListener: function (eventname,f) {
         if (eventname in this.channels) {
@@ -58,9 +58,9 @@ InAppBrowser.prototype = {
 
     executeScript: function(injectDetails, cb) {
         if (injectDetails.code) {
-            exec(cb, null, "InAppBrowser", "injectScriptCode", [injectDetails.code, !!cb]);
+            exec(cb, null, "InAppBrowserBeta", "injectScriptCode", [injectDetails.code, !!cb]);
         } else if (injectDetails.file) {
-            exec(cb, null, "InAppBrowser", "injectScriptFile", [injectDetails.file, !!cb]);
+            exec(cb, null, "InAppBrowserBeta", "injectScriptFile", [injectDetails.file, !!cb]);
         } else {
             throw new Error('executeScript requires exactly one of code or file to be specified (beta)');
         }
@@ -68,9 +68,9 @@ InAppBrowser.prototype = {
 
     insertCSS: function(injectDetails, cb) {
         if (injectDetails.code) {
-            exec(cb, null, "InAppBrowser", "injectStyleCode", [injectDetails.code, !!cb]);
+            exec(cb, null, "InAppBrowserBeta", "injectStyleCode", [injectDetails.code, !!cb]);
         } else if (injectDetails.file) {
-            exec(cb, null, "InAppBrowser", "injectStyleFile", [injectDetails.file, !!cb]);
+            exec(cb, null, "InAppBrowserBeta", "injectStyleFile", [injectDetails.file, !!cb]);
         } else {
             throw new Error('insertCSS requires exactly one of code or file to be specified (beta)');
         }
@@ -85,14 +85,14 @@ module.exports = function(strUrl, strWindowName, strWindowFeatures) {
     }
 
     strUrl = urlutil.makeAbsolute(strUrl);
-    var iab = new InAppBrowser();
+    var iab = new InAppBrowserBeta();
     var cb = function(eventname) {
        iab._eventHandler(eventname);
     };
 
     strWindowFeatures = strWindowFeatures || "";
 
-    exec(cb, cb, "InAppBrowser", "openBeta", [strUrl, strWindowName, strWindowFeatures]);
+    exec(cb, cb, "InAppBrowserBeta", "open", [strUrl, strWindowName, strWindowFeatures]);
     return iab;
 };
 

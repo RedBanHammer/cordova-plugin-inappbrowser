@@ -17,7 +17,7 @@
  under the License.
  */
 
-#import "CDVInAppBrowser.h"
+#import "CDVInAppBrowserBeta.h"
 #import <Cordova/CDVPluginResult.h>
 #import <Cordova/CDVUserAgentUtil.h>
 #import <Cordova/CDVJSON.h>
@@ -33,16 +33,16 @@
 #define    LOCATIONBAR_HEIGHT 21.0
 #define    FOOTER_HEIGHT ((TOOLBAR_HEIGHT) + (LOCATIONBAR_HEIGHT))
 
-#pragma mark CDVInAppBrowser
+#pragma mark CDVInAppBrowserBeta
 
-@interface CDVInAppBrowser () {
+@interface CDVInAppBrowserBeta () {
     NSInteger _previousStatusBarStyle;
 }
 @end
 
-@implementation CDVInAppBrowser
+@implementation CDVInAppBrowserBeta
 
-- (CDVInAppBrowser*)initWithWebView:(UIWebView*)theWebView
+- (CDVInAppBrowserBeta*)initWithWebView:(UIWebView*)theWebView
 {
     self = [super initWithWebView:theWebView];
     if (self != nil) {
@@ -114,7 +114,7 @@
 
 - (void)openInInAppBrowser:(NSURL*)url withOptions:(NSString*)options
 {
-    CDVInAppBrowserOptions* browserOptions = [CDVInAppBrowserOptions parseOptions:options];
+    CDVInAppBrowserBetaOptions* browserOptions = [CDVInAppBrowserBetaOptions parseOptions:options];
 
     if (browserOptions.clearcache) {
         NSHTTPCookie *cookie;
@@ -140,7 +140,7 @@
 
     if (self.inAppBrowserViewController == nil) {
         NSString* originalUA = [CDVUserAgentUtil originalUserAgent];
-        self.inAppBrowserViewController = [[CDVInAppBrowserViewController alloc] initWithUserAgent:originalUA prevUserAgent:[self.commandDelegate userAgent] browserOptions: browserOptions];
+        self.inAppBrowserViewController = [[CDVInAppBrowserBetaViewController alloc] initWithUserAgent:originalUA prevUserAgent:[self.commandDelegate userAgent] browserOptions: browserOptions];
         self.inAppBrowserViewController.navigationDelegate = self;
 
         if ([self.viewController conformsToProtocol:@protocol(CDVScreenOrientationDelegate)]) {
@@ -216,7 +216,7 @@
 
     _previousStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
 
-    CDVInAppBrowserNavigationController* nav = [[CDVInAppBrowserNavigationController alloc]
+    CDVInAppBrowserBetaNavigationController* nav = [[CDVInAppBrowserBetaNavigationController alloc]
                                    initWithRootViewController:self.inAppBrowserViewController];
     nav.orientationDelegate = self.inAppBrowserViewController;
     nav.navigationBarHidden = YES;
@@ -260,7 +260,7 @@
 {
     if (!_injectedIframeBridge) {
         _injectedIframeBridge = YES;
-        // Create an iframe bridge in the new document to communicate with the CDVInAppBrowserViewController
+        // Create an iframe bridge in the new document to communicate with the CDVInAppBrowserBetaViewController
         [self.inAppBrowserViewController.webView stringByEvaluatingJavaScriptFromString:@"(function(d){var e = _cdvIframeBridge = d.createElement('iframe');e.style.display='none';d.body.appendChild(e);})(document)"];
     }
 
@@ -449,13 +449,13 @@
 
 @end
 
-#pragma mark CDVInAppBrowserViewController
+#pragma mark CDVInAppBrowserBetaViewController
 
-@implementation CDVInAppBrowserViewController
+@implementation CDVInAppBrowserBetaViewController
 
 @synthesize currentURL;
 
-- (id)initWithUserAgent:(NSString*)userAgent prevUserAgent:(NSString*)prevUserAgent browserOptions: (CDVInAppBrowserOptions*) browserOptions
+- (id)initWithUserAgent:(NSString*)userAgent prevUserAgent:(NSString*)prevUserAgent browserOptions: (CDVInAppBrowserBetaOptions*) browserOptions
 {
     self = [super init];
     if (self != nil) {
@@ -901,7 +901,7 @@
 
 @end
 
-@implementation CDVInAppBrowserOptions
+@implementation CDVInAppBrowserBetaOptions
 
 - (id)init
 {
@@ -926,9 +926,9 @@
     return self;
 }
 
-+ (CDVInAppBrowserOptions*)parseOptions:(NSString*)options
++ (CDVInAppBrowserBetaOptions*)parseOptions:(NSString*)options
 {
-    CDVInAppBrowserOptions* obj = [[CDVInAppBrowserOptions alloc] init];
+    CDVInAppBrowserBetaOptions* obj = [[CDVInAppBrowserBetaOptions alloc] init];
 
     // NOTE: this parsing does not handle quotes within values
     NSArray* pairs = [options componentsSeparatedByString:@","];
@@ -965,7 +965,7 @@
 
 @end
 
-@implementation CDVInAppBrowserNavigationController : UINavigationController
+@implementation CDVInAppBrowserBetaNavigationController : UINavigationController
 
 #pragma mark CDVScreenOrientationDelegate
 
