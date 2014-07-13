@@ -43,7 +43,10 @@ InAppBrowserBeta.prototype = {
         exec(null, null, "InAppBrowserBeta", "close", []);
     },
     show: function (eventname) {
-      exec(null, null, "InAppBrowserBeta", "show", []);
+        exec(null, null, "InAppBrowserBeta", "show", []);
+    },
+    reload: function (event) {
+        exec(null, null, "InAppBrowserBeta", "reload", []);
     },
     addEventListener: function (eventname,f) {
         if (eventname in this.channels) {
