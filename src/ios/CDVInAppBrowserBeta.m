@@ -63,10 +63,10 @@
     [self.inAppBrowserViewController.webView reload];
 }
 
-/*- (void)loadedStatus:(CDVInvokedUrlCommand*)command
+- (void)loadedStatus:(CDVInvokedUrlCommand*)command
 {
     if (self.callbackId != nil) {
-        NSString* loaded = [webView stringByEvaluatingJavaScriptFromString:@"(document.getElementById('shotbowAppPageLoaded')!=null).toString()"];
+        NSString* loaded = [self.inAppBrowserViewController.webView stringByEvaluatingJavaScriptFromString:@"(document.getElementById('shotbowAppPageLoaded')!=null).toString()"];
 
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                       messageAsDictionary:@{@"type":@"loadedStatus", @"loaded":loaded}];
@@ -74,7 +74,7 @@
 
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
     }
-}*/
+}
 
 - (void)close:(CDVInvokedUrlCommand*)command
 {
