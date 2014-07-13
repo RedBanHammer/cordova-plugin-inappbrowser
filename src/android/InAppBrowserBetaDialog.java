@@ -16,7 +16,7 @@
        specific language governing permissions and limitations
        under the License.
 */
-package org.apache.cordova.inappbrowser;
+package org.apache.cordova.inappbrowserbeta;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -29,16 +29,16 @@ import org.json.JSONObject;
 /**
  * Created by Oliver on 22/11/2013.
  */
-public class InAppBrowserDialog extends Dialog {
+public class InAppBrowserBetaDialog extends Dialog {
     Context context;
-    InAppBrowser inAppBrowser = null;
+    InAppBrowserBeta inAppBrowser = null;
 
-    public InAppBrowserDialog(Context context, int theme) {
+    public InAppBrowserBetaDialog(Context context, int theme) {
         super(context, theme);
         this.context = context;
     }
 
-    public void setInAppBroswer(InAppBrowser browser) {
+    public void setInAppBroswer(InAppBrowserBeta browser) {
         this.inAppBrowser = browser;
     }
 

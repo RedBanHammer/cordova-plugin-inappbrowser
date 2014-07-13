@@ -35,12 +35,12 @@
 
     <!-- android -->
     <platform name="android">
-        <js-module src="www/inappbrowser.js" name="inappbrowser">
+        <js-module src="www/inappbrowser.js" name="inappbrowserbeta">
             <clobbers target="window.openBeta" />
         </js-module>
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="InAppBrowser"> 
-                <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
+            <feature name="InAppBrowserBeta"> 
+                <param name="android-package" value="org.apache.cordova.inappbrowserbeta.InAppBrowserBeta"/>
             </feature>
         </config-file>
 

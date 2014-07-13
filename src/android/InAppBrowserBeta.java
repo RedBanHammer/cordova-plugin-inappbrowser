@@ -16,10 +16,10 @@
        specific language governing permissions and limitations
        under the License.
 */
-package org.apache.cordova.inappbrowser;
+package org.apache.cordova.inappbrowserbeta;
 
 import android.annotation.SuppressLint;
-import org.apache.cordova.inappbrowser.InAppBrowserDialog;
+import org.apache.cordova.inappbrowserbeta.InAppBrowserBetaDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -62,10 +62,10 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class InAppBrowser extends CordovaPlugin {
+public class InAppBrowserBeta extends CordovaPlugin {
 
     private static final String NULL = "null";
-    protected static final String LOG_TAG = "InAppBrowser";
+    protected static final String LOG_TAG = "InAppBrowserBeta";
     private static final String SELF = "_self";
     private static final String SYSTEM = "_system";
     // private static final String BLANK = "_blank";
@@ -79,7 +79,7 @@ public class InAppBrowser extends CordovaPlugin {
     private static final String CLEAR_ALL_CACHE = "clearcache";
     private static final String CLEAR_SESSION_CACHE = "clearsessioncache";
 
-    private InAppBrowserDialog dialog;
+    private InAppBrowserBetaDialog dialog;
     private WebView inAppWebView;
     private EditText edittext;
     private CallbackContext callbackContext;
@@ -405,7 +405,7 @@ public class InAppBrowser extends CordovaPlugin {
         return this.showLocationBar;
     }
 
-    private InAppBrowser getInAppBrowser(){
+    private InAppBrowserBeta getInAppBrowser(){
         return this;
     }
 
@@ -459,7 +459,7 @@ public class InAppBrowser extends CordovaPlugin {
 
             public void run() {
                 // Let's create the main dialog
-                dialog = new InAppBrowserDialog(cordova.getActivity(), android.R.style.Theme_NoTitleBar);
+                dialog = new InAppBrowserBetaDialog(cordova.getActivity(), android.R.style.Theme_NoTitleBar);
                 dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Dialog;
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
@@ -587,7 +587,7 @@ public class InAppBrowser extends CordovaPlugin {
                 inAppWebView = new WebView(cordova.getActivity());
                 inAppWebView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 inAppWebView.setWebChromeClient(new InAppChromeClient(thatWebView));
-                WebViewClient client = new InAppBrowserClient(thatWebView, edittext);
+                WebViewClient client = new InAppBrowserBetaClient(thatWebView, edittext);
                 inAppWebView.setWebViewClient(client);
                 WebSettings settings = inAppWebView.getSettings();
                 settings.setJavaScriptEnabled(true);
@@ -686,7 +686,7 @@ public class InAppBrowser extends CordovaPlugin {
     /**
      * The webview client receives notifications about appView
      */
-    public class InAppBrowserClient extends WebViewClient {
+    public class InAppBrowserBetaClient extends WebViewClient {
         EditText edittext;
         CordovaWebView webView;
 
@@ -696,7 +696,7 @@ public class InAppBrowser extends CordovaPlugin {
          * @param mContext
          * @param edittext
          */
-        public InAppBrowserClient(CordovaWebView webView, EditText mEditText) {
+        public InAppBrowserBetaClient(CordovaWebView webView, EditText mEditText) {
             this.webView = webView;
             this.edittext = mEditText;
         }
