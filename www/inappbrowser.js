@@ -62,7 +62,7 @@ InAppBrowser.prototype = {
         } else if (injectDetails.file) {
             exec(cb, null, "InAppBrowser", "injectScriptFile", [injectDetails.file, !!cb]);
         } else {
-            throw new Error('executeScript requires exactly one of code or file to be specified');
+            throw new Error('executeScript requires exactly one of code or file to be specified (beta)');
         }
     },
 
@@ -72,7 +72,7 @@ InAppBrowser.prototype = {
         } else if (injectDetails.file) {
             exec(cb, null, "InAppBrowser", "injectStyleFile", [injectDetails.file, !!cb]);
         } else {
-            throw new Error('insertCSS requires exactly one of code or file to be specified');
+            throw new Error('insertCSS requires exactly one of code or file to be specified (beta)');
         }
     }
 };
@@ -92,7 +92,7 @@ module.exports = function(strUrl, strWindowName, strWindowFeatures) {
 
     strWindowFeatures = strWindowFeatures || "";
 
-    exec(cb, cb, "InAppBrowser", "open", [strUrl, strWindowName, strWindowFeatures]);
+    exec(cb, cb, "InAppBrowser", "openBeta", [strUrl, strWindowName, strWindowFeatures]);
     return iab;
 };
 
