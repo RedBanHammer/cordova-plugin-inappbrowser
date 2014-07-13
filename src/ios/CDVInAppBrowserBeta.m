@@ -63,7 +63,7 @@
     [self.inAppBrowserViewController.webView reload];
 }
 
-- (void)loadedStatus:(CDVInvokedUrlCommand*)command
+/*- (void)loadedStatus:(CDVInvokedUrlCommand*)command
 {
     if (self.callbackId != nil) {
         NSString* loaded = [webView stringByEvaluatingJavaScriptFromString:@"(document.getElementById('shotbowAppPageLoaded')!=null).toString()"];
@@ -74,7 +74,7 @@
 
         [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
     }
-}
+}*/
 
 - (void)close:(CDVInvokedUrlCommand*)command
 {
