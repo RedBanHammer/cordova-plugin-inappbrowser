@@ -586,7 +586,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 // WebView
                 inAppWebView = new WebView(cordova.getActivity());
                 inAppWebView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-                inAppWebView.setWebChromeClient(new InAppChromeClient(thatWebView));
+                inAppWebView.setWebChromeClient(new InAppChromeClientBeta(thatWebView));
                 WebViewClient client = new InAppBrowserBetaClient(thatWebView, edittext);
                 inAppWebView.setWebViewClient(client);
                 WebSettings settings = inAppWebView.getSettings();
