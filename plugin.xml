@@ -35,7 +35,7 @@
 
     <!-- android -->
     <platform name="android">
-        <js-module src="www/inappbrowser.js" name="inappbrowserbeta">
+        <js-module src="www/inappbrowserbeta.js" name="inappbrowserbeta">
             <clobbers target="window.openBeta" />
         </js-module>
         <config-file target="res/xml/config.xml" parent="/*">
