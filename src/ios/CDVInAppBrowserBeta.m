@@ -66,7 +66,7 @@
 - (void)loadedStatus:(CDVInvokedUrlCommand*)command
 {
     if (self.callbackId != nil) {
-        NSString* loaded = [webView stringByEvaluatingJavaScriptFromString:@"(document.getElementById('asdf')!=null).toString()"];
+        NSString* loaded = [webView stringByEvaluatingJavaScriptFromString:@"(document.getElementById('shotbowAppPageLoaded')!=null).toString()"];
 
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
                                                       messageAsDictionary:@{@"type":@"loadedStatus", @"loaded":loaded}];
@@ -614,7 +614,7 @@
     self.closeButton = nil;
     self.closeButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:self action:@selector(close)];
     self.closeButton.enabled = YES;
-    self.closeButton.tintColor = [UIColor colorWithRed:60.0 / 255.0 green:136.0 / 255.0 blue:230.0 / 255.0 alpha:1];
+    self.closeButton.tintColor = [UIColor colorWithWhite:1.000 alpha:1.000];
 
     NSMutableArray* items = [self.toolbar.items mutableCopy];
     [items replaceObjectAtIndex:0 withObject:self.closeButton];
