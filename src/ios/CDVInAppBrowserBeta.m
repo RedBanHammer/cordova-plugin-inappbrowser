@@ -63,6 +63,19 @@
     [self.inAppBrowserViewController.webView reload];
 }
 
+- (void)loadedStatus:(CDVInvokedUrlCommand*)command
+{
+    if (self.callbackId != nil) {
+        NSString* loaded = [webView stringByEvaluatingJavaScriptFromString:@"(document.getElementById('asdf')!=null).toString()"];
+
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                                      messageAsDictionary:@{@"type":@"loadedStatus", @"loaded":loaded}];
+        [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
+    }
+}
+
 - (void)close:(CDVInvokedUrlCommand*)command
 {
     if (self.inAppBrowserViewController == nil) {
