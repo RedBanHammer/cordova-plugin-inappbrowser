@@ -310,9 +310,9 @@
     NSString* jsWrapper;
 
     if ((command.callbackId != nil) && ![command.callbackId isEqualToString:@"INVALID"]) {
-        jsWrapper = [NSString stringWithFormat:@"(function(d) { var c = d.createElement('script'); c.src = %%@; c.onload = function() { _cdvIframeBridge.src='gap-iab://%@'; }; d.body.appendChild(c); })(document)", command.callbackId];
+        jsWrapper = [NSString stringWithFormat:@"if (document.body && typeof document.body !== 'undefined') { (function(d) { var c = d.createElement('script'); if (!c || typeof c === 'undefined') { return; } c.src = %%@; c.onload = function() { _cdvIframeBridge.src='gap-iab://%@'; }; d.body.appendChild(c); })(document) }", command.callbackId];
     } else {
-        jsWrapper = @"(function(d) { var c = d.createElement('script'); c.src = %@; d.body.appendChild(c); })(document)";
+        jsWrapper = @"if (document.body && typeof document.body !== 'undefined') { (function(d) { var c = d.createElement('script'); if (!c || typeof c === 'undefined') { return; } c.src = %@;d.body.appendChild(c); })(document) }";
     }
     [self injectDeferredObject:[command argumentAtIndex:0] withWrapper:jsWrapper];
 }
@@ -322,9 +322,9 @@
     NSString* jsWrapper;
 
     if ((command.callbackId != nil) && ![command.callbackId isEqualToString:@"INVALID"]) {
-        jsWrapper = [NSString stringWithFormat:@"(function(d) { var c = d.createElement('style'); c.innerHTML = %%@; c.onload = function() { _cdvIframeBridge.src='gap-iab://%@'; }; d.body.appendChild(c); })(document)", command.callbackId];
+        jsWrapper = [NSString stringWithFormat:@"if (document.body && typeof document.body !== 'undefined') { (function(d) { var c = d.createElement('style'); if (!c || typeof c === 'undefined') { return; } c.innerHTML = %%@; c.onload = function() { _cdvIframeBridge.src='gap-iab://%@'; }; d.body.appendChild(c); })(document) }", command.callbackId];
     } else {
-        jsWrapper = @"(function(d) { var c = d.createElement('style'); c.innerHTML = %@; d.body.appendChild(c); })(document)";
+        jsWrapper = @"if (document.body && typeof document.body !== 'undefined') { (function(d) { var c = d.createElement('style'); if (!c || typeof c === 'undefined') { return; } c.innerHTML = %@; d.body.appendChild(c); })(document) }";
     }
     [self injectDeferredObject:[command argumentAtIndex:0] withWrapper:jsWrapper];
 }
@@ -334,9 +334,9 @@
     NSString* jsWrapper;
 
     if ((command.callbackId != nil) && ![command.callbackId isEqualToString:@"INVALID"]) {
-        jsWrapper = [NSString stringWithFormat:@"(function(d) { var c = d.createElement('link'); c.rel='stylesheet'; c.type='text/css'; c.href = %%@; c.onload = function() { _cdvIframeBridge.src='gap-iab://%@'; }; d.body.appendChild(c); })(document)", command.callbackId];
+        jsWrapper = [NSString stringWithFormat:@"if (document.body && typeof document.body !== 'undefined') { (function(d) { var c = d.createElement('link'); if (!c || typeof c === 'undefined') { return; } c.rel='stylesheet'; c.type='text/css'; c.href = %%@; c.onload = function() { _cdvIframeBridge.src='gap-iab://%@'; }; d.body.appendChild(c); })(document) }", command.callbackId];
     } else {
-        jsWrapper = @"(function(d) { var c = d.createElement('link'); c.rel='stylesheet', c.type='text/css'; c.href = %@; d.body.appendChild(c); })(document)";
+        jsWrapper = @"if (document.body && typeof document.body !== 'undefined') { (function(d) { var c = d.createElement('link'); if (!c || typeof c === 'undefined') { return; } c.rel='stylesheet', c.type='text/css'; c.href = %@; d.body.appendChild(c); })(document) }";
     }
     [self injectDeferredObject:[command argumentAtIndex:0] withWrapper:jsWrapper];
 }
