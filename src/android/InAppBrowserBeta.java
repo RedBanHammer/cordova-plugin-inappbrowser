@@ -259,12 +259,12 @@ public class InAppBrowserBeta extends CordovaPlugin {
             public void run() {
                 //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 // Appgyver throws an error with the edge legacy build if using reference
-                if (Build.VERSION.SDK_INT < 19) {
+                //if (Build.VERSION.SDK_INT < 19) {
                     // This action will have the side-effect of blurring the currently focused element
                     inAppWebView.loadUrl("javascript:" + finalScriptToInject);
-                } else {// More appgyver errors
+                //} else {// More appgyver errors
                     //inAppWebView.evaluateJavascript(finalScriptToInject, null);
-                }
+                //}
             }
         });
     }
