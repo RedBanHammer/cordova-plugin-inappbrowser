@@ -61,7 +61,8 @@
 - (void)reload:(CDVInvokedUrlCommand*)command
 {
     //[self.inAppBrowserViewController.webView reload];
-    [self hide:nil];
+    //[self hide:nil];
+    [self.inAppBrowserViewController hide];
 }
 
 - (void)loadedStatus:(CDVInvokedUrlCommand*)command
@@ -774,7 +775,7 @@
 - (void)hide
 {
     [CDVUserAgentUtil releaseLock:&_userAgentLockToken];
-    
+
     // Run later to avoid the "took a long time" log message.
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([self respondsToSelector:@selector(presentingViewController)]) {
