@@ -564,7 +564,7 @@
 	// Tab bar testing
 	float tabBarY = self.view.bounds.size.height - TABBAR_HEIGHT;
 
-	self.tabBar = [[UITabBar alloc] initWithFrame:CGRectMake(labelInset, tabBarY, self.view.bounds.size.width, TABBAR_HEIGHT)];
+	self.tabBar = [[UITabBar alloc] initWithFrame:CGRectMake(0, tabBarY, self.view.bounds.size.width, TABBAR_HEIGHT)];
 	// myTabBar.delegate=self;   //here you need import the protocol <UITabBarDelegate>
 	NSMutableArray *tabBarItems = [[NSMutableArray alloc] init];
 
