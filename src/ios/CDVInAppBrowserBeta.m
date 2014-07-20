@@ -60,7 +60,8 @@
 
 - (void)reload:(CDVInvokedUrlCommand*)command
 {
-    [self.inAppBrowserViewController.webView reload];
+    //[self.inAppBrowserViewController.webView reload];
+    [self hide:nil];
 }
 
 - (void)loadedStatus:(CDVInvokedUrlCommand*)command
