@@ -63,6 +63,7 @@
     //[self.inAppBrowserViewController.webView reload];
     //[self hide:nil];
     [self.inAppBrowserViewController hide];
+    _previousStatusBarStyle = -1;
 }
 
 - (void)loadedStatus:(CDVInvokedUrlCommand*)command
