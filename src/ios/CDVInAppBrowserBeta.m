@@ -668,6 +668,7 @@
         } else {
             // no toolBar, expand webView to screen dimensions
             //[self setWebViewFrame:self.view.bounds];
+            CGRect webViewBounds = self.view.bounds;
             webViewBounds.size.height -= 200;
             [self setWebViewFrame:webViewBounds];
         }
