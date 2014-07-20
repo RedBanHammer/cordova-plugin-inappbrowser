@@ -667,7 +667,7 @@
             [self setWebViewFrame:webViewBounds];
         } else {
             // no toolBar, expand webView to screen dimensions
-            [self setWebViewFrame:self.view.bounds];
+            //[self setWebViewFrame:self.view.bounds];
         }
     }
 }
