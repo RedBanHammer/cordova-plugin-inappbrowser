@@ -58,7 +58,7 @@
     [self close:nil];
 }
 
-- (void)reload:(CDVInvokedUrlCommand*)command
+- (void)hide:(CDVInvokedUrlCommand*)command
 {
     //[self.inAppBrowserViewController.webView reload];
     //[self hide:nil];

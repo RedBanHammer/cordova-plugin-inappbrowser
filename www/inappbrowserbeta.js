@@ -46,8 +46,8 @@ InAppBrowserBeta.prototype = {
     show: function (eventname) {
         exec(null, null, "InAppBrowserBeta", "show", []);
     },
-    reload: function (eventname) {
-        exec(null, null, "InAppBrowserBeta", "reload", []);
+    hide: function (eventname) {
+        exec(null, null, "InAppBrowserBeta", "hide", []);
     },
     loadedStatus: function (eventname) {
         exec(null, null, "InAppBrowserBeta", "loadedStatus", []);
