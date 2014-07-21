@@ -458,11 +458,12 @@
 
 
 // Tabbar testing
-- (void)toolbarItemTapped:(NSInteger*)tabIndex
+- (void)toolbarItemTapped:(NSInteger)tabIndex
 {
 	if (self.callbackId != nil) {
+		NSInteger index = tabIndex;
 		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-													   messageAsDictionary:@{@"type":@"toolbarItemTapped", @"index":tabIndex}];
+													   messageAsDictionary:@{@"type":@"toolbarItemTapped", @"index":index}];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
 	}
 }
