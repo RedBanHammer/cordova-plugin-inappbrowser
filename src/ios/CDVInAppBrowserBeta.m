@@ -752,7 +752,7 @@
 
 	NSInteger index = [tabBarInit integerValue];
     UITabBarItem *item = [self.tabBar.items objectAtIndex:index];
-    tabBar.selectedItem = item ? item : nil;
+    self.tabBar.selectedItem = item ? item : nil;
 }
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
