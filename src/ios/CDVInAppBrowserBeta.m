@@ -694,19 +694,14 @@
 {
 	// the advantage of using UIBarButtonSystemItemDone is the system will localize it for you automatically
 	// but, if you want to set this yourself, knock yourself out (we can't set the title for a system Done button, so we have to create a new one)
-	if (![title isEqualToString:@""]) { // Don't init if the title is blank
-		self.closeButton = nil;
-		self.closeButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:self action:@selector(close)];
-		self.closeButton.enabled = YES;
-		self.closeButton.tintColor = [UIColor colorWithWhite:1.000 alpha:1.000];
+	self.closeButton = nil;
+	self.closeButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:self action:@selector(close)];
+	self.closeButton.enabled = ![title isEqualToString:@""] ? YES : NO; // Don't init if the title is blank
+	self.closeButton.tintColor = [UIColor colorWithWhite:1.000 alpha:1.000];
 
-		NSMutableArray* items = [self.toolbar.items mutableCopy];
-		[items replaceObjectAtIndex:0 withObject:self.closeButton];
-		[self.toolbar setItems:items];
-	} else {
-		self.closeButton.enabled = NO;
-		self.closeButton = nil;
-	}
+	NSMutableArray* items = [self.toolbar.items mutableCopy];
+	[items replaceObjectAtIndex:0 withObject:self.closeButton];
+	[self.toolbar setItems:items];
 }
 
 - (void)showLocationBar:(BOOL)show
@@ -770,17 +765,11 @@
 - (void)showTabBar:(BOOL)show : (NSNumber *) tabBarInit
 {
 	if (show == !(self.tabBar.hidden)) {
-		return;
+		self.tabBar.hidden = show ? NO : YES;
 	}
 
-	self.tabBar.hidden = show ? NO : YES;
-
-	//NSInteger index = [tabBarInit integerValue];
-    //UITabBarItem *item = [self.tabBar.items objectAtIndex:index];
-
-
-
-    UITabBarItem *item = [self.tabBar.items objectAtIndex:2]; // Testing if it even works
+	NSInteger index = [tabBarInit integerValue];
+    UITabBarItem *item = [self.tabBar.items objectAtIndex:index];
 
     self.tabBar.selectedItem = item ? item : nil;
 }
