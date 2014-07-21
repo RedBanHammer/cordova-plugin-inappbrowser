@@ -578,10 +578,10 @@
 	NSString *tab4Base64 = @"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAADqElEQVR4nO3bSYgcVRzH8U/XxIgJDJqg4nKQQBT3TAwoHhSXAbeDiuJFwYse1IN4FldEMXrw4EXRkyieYox7XGPE0cRkSMTgBqOJaBIxIRrFTNLPw5swnU71dHVPLd1tvvBoqK5X9fv1e1Vv+f+7FkLwfyKpWkDZHDE86Mwp6Lon43wswek4BadiAY7BPAT8hb1Tn9vxQ0NZh5/yFlbL6aU1H9fgyqmyKI+LiobX4EO8ht2zveBsDCeiydtwndhqRfIv3sJLeAP7urlIN4bn407cI7+W7JRtWI7n8U9HNUMIWctRIYS7Qwi/ht5hewjh3hDCUMjoI2sLL8MLOK/TpiiJjWKvW9/uxHbDUg0PYUzvmoURfIFHRc0tmamFh/Eyrs1VWvGsxK3iUHcYrQwvwLtiV+5HNuNy/N78RZrhYXwiThr6ma9E03saDzY/w0N4Rf+bhQuwCnMbDzYbflCcTAwKl+CRxgONXXoZPlfc/Loq6rgUaznU8HqxGwwi3+Is1A926RsNrlk4Azcx3cJjuLBKRSUwjpFaCGExvqtYTFmcneD6qlWUyGiCi6pWUSJXJDi3ahUlclqC46tWUSIn1EIIkwZvstGKyUTT5HrA+SORsoQaYHYk2FK1ihKZSPBp1SpK5IMEq6tWUSKrE2zCl1UrKYFxfHNwtfRshULK4nGmV0uJuAe0pEJBRXLYerguhk4GMR2gjjumPg/Z0/oMT1ahqGCe0jASNW/TDuE9cXtzEFiDUQ2RxrR96ePwPpaWp6sQNuAybfalYZcY1N5Qgqii+BpXSVkntAqm7RJ/nZUFiiqK13ExdqZ9OVP0cA9uwAM4kL+u3KnjMXHL6s9WJ2WNDy8Vo+29+lyPi/Hhde1O7CTlYUiMyp3Ztaz82Ykn8IyMvbATwyeJuRW9kNu1DU/jOfzdScVOtnZuVq3ZfaazeFYpIYtnM87p5iaz4GfTeVor5JCnlbWFr9a92QNi/sXCqTIPR4tv1b2mM/F+w49iFt73YnBvost7tiRLC88RV1LdJLXswC34uIu6hZClhe/XndkxMWL3Sxd1i6NNItdoCGF/h8likyGE5SGEuVmTxcosM3XpEbErDnfw+63FXeILridpNcwswtuym92K28Wcip41S/ozvBDv4MQM9TeKE4BXsT9HXYWRZvhhLJ6hzm68iRfF8bGvSDOclqu4VTS5Ah9hskhRRZL20joW94lTty3iGDxRqqoCyesvAH1DL6x8SuWI4UHnP3VdftB00CrhAAAAAElFTkSuQmCC";
 
 	// UIImages
-	UIImage *tab1Img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:tab1Base64]]];
-	UIImage *tab2Img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:tab2Base64]]];
-	UIImage *tab3Img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:tab3Base64]]];
-	UIImage *tab4Img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:tab4Base64]]];
+	UIImage *tab1Img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:tab1Base64]] scale:2];
+	UIImage *tab2Img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:tab2Base64]] scale:2];
+	UIImage *tab3Img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:tab3Base64]] scale:2];
+	UIImage *tab4Img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:tab4Base64]] scale:2];
 
 
 	UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:tab1Img tag:0];
