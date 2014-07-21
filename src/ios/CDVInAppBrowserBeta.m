@@ -706,10 +706,6 @@
 	} else {
 		self.closeButton.enabled = NO;
 		self.closeButton = nil;
-
-		NSMutableArray* items = [self.toolbar.items mutableCopy];
-		[items replaceObjectAtIndex:0 withObject:self.closeButton];
-		[self.toolbar setItems:items];
 	}
 }
 
