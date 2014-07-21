@@ -30,7 +30,8 @@ function InAppBrowserBeta() {
         'loadstop' : channel.create('loadstop'),
         'loaderror' : channel.create('loaderror'),
         'loadedStatus' : channel.create('loadedStatus'),
-        'exit' : channel.create('exit')
+        'exit' : channel.create('exit'),
+        'toolbarItemTapped' : channel.create('toolbarItemTapped')
    };
 }
 

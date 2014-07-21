@@ -451,6 +451,29 @@
 	}
 }
 
+
+
+
+
+
+
+// Tabbar testing
+- (void)toolbarItemTapped:(NSInteger*)tabIndex
+{
+	if (self.callbackId != nil) {
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+													   messageAsDictionary:@{@"type":@"toolbarItemTapped", @"index":tabIndex}];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
+	}
+}
+
+
+
+
+
+
+
+
 - (void)browserExit
 {
 	if (self.callbackId != nil) {
@@ -681,6 +704,11 @@
 		[self.toolbar setItems:items];
 	} else {
 		self.closeButton.enabled = NO;
+		self.closeButton = nil;
+
+		NSMutableArray* items = [self.toolbar.items mutableCopy];
+		[items replaceObjectAtIndex:0 withObject:self.closeButton];
+		[self.toolbar setItems:items];
 	}
 }
 
@@ -750,8 +778,13 @@
 
 	self.tabBar.hidden = show ? NO : YES;
 
-	NSInteger index = [tabBarInit integerValue];
-    UITabBarItem *item = [self.tabBar.items objectAtIndex:index];
+	//NSInteger index = [tabBarInit integerValue];
+    //UITabBarItem *item = [self.tabBar.items objectAtIndex:index];
+
+
+
+    UITabBarItem *item = [self.tabBar.items objectAtIndex:2]; // Testing if it even works
+
     self.tabBar.selectedItem = item ? item : nil;
 }
 
@@ -759,7 +792,8 @@
 {
     //NSString * jsCallBack = [NSString stringWithFormat:@"window.plugins.nativeControls.tabBarItemSelected(%d);", item.tag];    
     //[self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
-    [self close];
+    //[self close];
+    [self.navigationDelegate toolbarItemTapped:item.tag];
 }
 
 
