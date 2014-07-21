@@ -1041,6 +1041,8 @@
 		// default values
 		self.location = YES;
 		self.toolbar = YES;
+		self.tabbar = YES;
+		self.tabbarinit = 0;
 		self.closebuttoncaption = nil;
 		self.toolbarposition = kInAppBrowserToolbarBarPositionBottom;
 		self.clearcache = NO;
