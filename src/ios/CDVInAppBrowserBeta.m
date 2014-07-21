@@ -524,7 +524,7 @@
 
 	CGRect webViewBounds = self.view.bounds;
 	BOOL toolbarIsAtBottom = ![_browserOptions.toolbarposition isEqualToString:kInAppBrowserToolbarBarPositionTop];
-	webViewBounds.size.height -= _browserOptions.location ? FOOTER_HEIGHT+TABBAR_HEIGHT : TOOLBAR_HEIGHT+TABBAR_HEIGHT;
+	webViewBounds.size.height -= (_browserOptions.location ? FOOTER_HEIGHT : TOOLBAR_HEIGHT) + TABBAR_HEIGHT;
 	self.webView = [[UIWebView alloc] initWithFrame:webViewBounds];
 
 	self.webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -632,7 +632,7 @@
 
 
 	CGFloat labelInset = 5.0;
-	float locationBarY = toolbarIsAtBottom ? self.view.bounds.size.height - FOOTER_HEIGHT : self.view.bounds.size.height - LOCATIONBAR_HEIGHT;
+	float locationBarY = toolbarIsAtBottom ? self.view.bounds.size.height - (FOOTER_HEIGHT + TABBAR_HEIGHT) : self.view.bounds.size.height - LOCATIONBAR_HEIGHT;
 
 	self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelInset, locationBarY, self.view.bounds.size.width - labelInset, LOCATIONBAR_HEIGHT)];
 	self.addressLabel.adjustsFontSizeToFitWidth = NO;
@@ -723,7 +723,7 @@
 			// put locationBar on top of the toolBar
 
 			CGRect webViewBounds = self.view.bounds;
-			webViewBounds.size.height -= FOOTER_HEIGHT;
+			webViewBounds.size.height -= FOOTER_HEIGHT + TABBAR_HEIGHT;
 			[self setWebViewFrame:webViewBounds];
 
 			locationbarFrame.origin.y = webViewBounds.size.height;
@@ -732,7 +732,7 @@
 			// no toolBar, so put locationBar at the bottom
 
 			CGRect webViewBounds = self.view.bounds;
-			webViewBounds.size.height -= LOCATIONBAR_HEIGHT;
+			webViewBounds.size.height -= LOCATIONBAR_HEIGHT + TABBAR_HEIGHT;
 			[self setWebViewFrame:webViewBounds];
 
 			locationbarFrame.origin.y = webViewBounds.size.height;
@@ -746,7 +746,7 @@
 
 			// webView take up whole height less toolBar height
 			CGRect webViewBounds = self.view.bounds;
-			webViewBounds.size.height -= TOOLBAR_HEIGHT;
+			webViewBounds.size.height -= TOOLBAR_HEIGHT + TABBAR_HEIGHT;
 			[self setWebViewFrame:webViewBounds];
 		} else {
 			// no toolBar, expand webView to screen dimensions
