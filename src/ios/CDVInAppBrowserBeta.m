@@ -173,6 +173,8 @@
 
 	[self.inAppBrowserViewController showLocationBar:browserOptions.location];
 	[self.inAppBrowserViewController showToolBar:browserOptions.toolbar :browserOptions.toolbarposition];
+	[self.inAppBrowserViewController showTabBar:browserOptions.tabbar :browserOptions.tabbarinit];
+
 	if (browserOptions.closebuttoncaption != nil) {
 		[self.inAppBrowserViewController setCloseButtonTitle:browserOptions.closebuttoncaption];
 	}
@@ -533,7 +535,7 @@
 	[self.spinner stopAnimating];
 
 	self.closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close)];
-	self.closeButton.enabled = YES;
+	self.closeButton.enabled = NO;
 
 	UIBarButtonItem* flexibleSpaceButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
@@ -598,7 +600,8 @@
 	self.tabBar.selectedItem = [tabBarItems objectAtIndex:0];
 	self.tabBar.autoresizesSubviews = YES;
 	self.tabBar.userInteractionEnabled = YES;
-	//self.tabBar.delegate = self;
+	self.tabBar.hidden = NO;
+	self.tabBar.delegate = self;
 
 
 
@@ -667,14 +670,18 @@
 {
 	// the advantage of using UIBarButtonSystemItemDone is the system will localize it for you automatically
 	// but, if you want to set this yourself, knock yourself out (we can't set the title for a system Done button, so we have to create a new one)
-	self.closeButton = nil;
-	self.closeButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:self action:@selector(close)];
-	self.closeButton.enabled = YES;
-	self.closeButton.tintColor = [UIColor colorWithWhite:1.000 alpha:1.000];
+	if (![title isEqualToString:@""]) { // Don't init if the title is blank
+		self.closeButton = nil;
+		self.closeButton = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:self action:@selector(close)];
+		self.closeButton.enabled = YES;
+		self.closeButton.tintColor = [UIColor colorWithWhite:1.000 alpha:1.000];
 
-	NSMutableArray* items = [self.toolbar.items mutableCopy];
-	[items replaceObjectAtIndex:0 withObject:self.closeButton];
-	[self.toolbar setItems:items];
+		NSMutableArray* items = [self.toolbar.items mutableCopy];
+		[items replaceObjectAtIndex:0 withObject:self.closeButton];
+		[self.toolbar setItems:items];
+	} else {
+		self.closeButton.enabled = NO;
+	}
 }
 
 - (void)showLocationBar:(BOOL)show
@@ -727,6 +734,40 @@
 		}
 	}
 }
+
+
+
+
+
+
+
+// Tab bar testing
+- (void)showTabBar:(BOOL)show : (NSNumber *) tabBarInit
+{
+	if (show == !(self.tabBar.hidden)) {
+		return;
+	}
+
+	self.tabBar.hidden = show ? NO : YES;
+
+	NSInteger index = [tabBarInit integerValue];
+    UITabBarItem *item = [self.tabBar.items objectAtIndex:index];
+    tabBar.selectedItem = item ? item : nil;
+}
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    //NSString * jsCallBack = [NSString stringWithFormat:@"window.plugins.nativeControls.tabBarItemSelected(%d);", item.tag];    
+    //[self.webView stringByEvaluatingJavaScriptFromString:jsCallBack];
+    [self close];
+}
+
+
+
+
+
+
+
 
 - (void)showToolBar:(BOOL)show : (NSString *) toolbarPosition
 {
