@@ -93,6 +93,7 @@
 - (void)hide;
 - (void)navigateTo:(NSURL*)url;
 - (void)showLocationBar:(BOOL)show;
+- (void)showTabBar:(BOOL)show : (NSNumber*)tabBarInit;
 - (void)showToolBar:(BOOL)show : (NSString *) toolbarPosition;
 - (void)setCloseButtonTitle:(NSString*)title;
 
