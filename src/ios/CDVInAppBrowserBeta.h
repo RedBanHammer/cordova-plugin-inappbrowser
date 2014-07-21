@@ -65,7 +65,7 @@
 
 @end
 
-@interface CDVInAppBrowserBetaViewController : UIViewController <UIWebViewDelegate, CDVScreenOrientationDelegate>{
+@interface CDVInAppBrowserBetaViewController : UIViewController <UITabBarDelegate, UIWebViewDelegate, CDVScreenOrientationDelegate>{
     @private
     NSString* _userAgent;
     NSString* _prevUserAgent;

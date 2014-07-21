@@ -498,7 +498,7 @@
 
 	CGRect webViewBounds = self.view.bounds;
 	BOOL toolbarIsAtBottom = ![_browserOptions.toolbarposition isEqualToString:kInAppBrowserToolbarBarPositionTop];
-	webViewBounds.size.height -= _browserOptions.location ? FOOTER_HEIGHT : TOOLBAR_HEIGHT;
+	webViewBounds.size.height -= _browserOptions.location ? FOOTER_HEIGHT+TABBAR_HEIGHT : TOOLBAR_HEIGHT+TABBAR_HEIGHT;
 	self.webView = [[UIWebView alloc] initWithFrame:webViewBounds];
 
 	self.webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -565,15 +565,14 @@
 	float tabBarY = self.view.bounds.size.height - TABBAR_HEIGHT;
 
 	self.tabBar = [[UITabBar alloc] initWithFrame:CGRectMake(0, tabBarY, self.view.bounds.size.width, TABBAR_HEIGHT)];
-	// myTabBar.delegate=self;   //here you need import the protocol <UITabBarDelegate>
 	NSMutableArray *tabBarItems = [[NSMutableArray alloc] init];
 
-	UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:[UIImage imageNamed:@"image-1.png"] tag:0];
-	UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Maps" image:[UIImage imageNamed:@"mentionsIcon.png"] tag:1];
+	UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:[UIImage imageNamed:@"home@2x.png"] tag:0];
+	UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Maps" image:[UIImage imageNamed:@"/assets/img/TabBarIcons/home@2x.png"] tag:1];
 
-	UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Forums" image:[UIImage imageNamed:@"lambicon.png"] tag:2];
+	UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Forums" image:[UIImage imageNamed:@"assets/img/TabBarIcons/home@2x.png"] tag:2];
 
-	UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Chat" image:[UIImage imageNamed:@"image-2.png"] tag:3];
+	UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Chat" image:[UIImage imageNamed:@"TabBarIcons/home@2x.png"] tag:3];
 
 	[tabBarItems addObject:tabBarItem];
 	[tabBarItems addObject:tabBarItem1];
@@ -582,6 +581,9 @@
 
 	self.tabBar.items = tabBarItems;
 	self.tabBar.selectedItem = [tabBarItems objectAtIndex:0];
+	self.tabBar.autoresizesSubviews = YES;
+	self.tabBar.userInteractionEnabled = YES;
+	//self.tabBar.delegate = self;
 
 
 
