@@ -739,6 +739,15 @@ public class InAppBrowserBeta extends CordovaPlugin {
         }
     }
 
+    public void addCallbackInterface(WebView view) {
+        this.cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                view.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
+            }
+        });
+    }
+
 
     
     /**
@@ -831,8 +840,8 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 edittext.setText(newloc);
             }
 
-
-            //view.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
+            addCallbackInterface(view);
+            
 
             try {
                 JSONObject obj = new JSONObject();
