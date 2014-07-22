@@ -93,8 +93,16 @@ public class InAppBrowserBeta extends CordovaPlugin {
     public class LoadedStatusInterface {
         @JavascriptInterface
         @SuppressWarnings("unused")
-        public void callback(String str) {
-
+        public void callback(String s) {
+            try {
+                JSONObject obj = new JSONObject();
+                obj.put("type", "loadedStatus");
+                obj.put("loaded", s);
+    
+                sendUpdate(obj, true);
+            } catch (JSONException ex) {
+                Log.d(LOG_TAG, "Should never happen");
+            }
         }
     }
 
