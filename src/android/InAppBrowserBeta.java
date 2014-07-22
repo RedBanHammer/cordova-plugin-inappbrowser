@@ -539,11 +539,53 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 // Let's create the main dialog
                 dialog = new InAppBrowserBetaDialog(cordova.getActivity(), getShowTabBar() ? android.R.style.Theme_DeviceDefault : android.R.style.Theme_NoTitleBar);
                 dialog.getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-                
+
                 dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Dialog;
                 dialog.requestWindowFeature(getShowTabBar() ? Window.FEATURE_ACTION_BAR : Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setInAppBroswer(getInAppBrowser());
+
+                // Action bar testing (fake tabs, etc)
+                if (getShowTabBar()) {
+                    ActionBar actionBar = dialog.getActionBar();
+                    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                    actionBar.setBackgroundDrawable(new ColorDrawable(0xffbc4f44));
+
+                    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+                         public void onTabSelected(Tab tab, FragmentTransaction ft) {
+                             int tabIndex = tab.getPosition();
+
+                            try {
+                                JSONObject obj = new JSONObject();
+                                obj.put("type", "toolbarItemTapped");
+                                obj.put("index", tabIndex);
+
+                                sendUpdate(obj, true);
+                            } catch (JSONException ex) {
+                                Log.d(LOG_TAG, "Should never happen");
+                            }
+                         }
+
+                         public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+                             // TODO Auto-generated method stub
+                         }
+
+                         public void onTabReselected(Tab tab, FragmentTransaction ft) {
+                             // TODO Auto-generated method stub
+                         }
+                     };
+
+                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(tabListener);
+                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(tabListener);
+                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(tabListener);
+                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(tabListener);
+
+                    //add the two tabs to the actionbar
+                    actionBar.addTab(tab1, 0, false);
+                    actionBar.addTab(tab2, 1, false);
+                    actionBar.addTab(tab3, 2, false);
+                    actionBar.addTab(tab4, 3, false);
+                }
 
 
                 // Main container layout
@@ -730,52 +772,6 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 // Show() needs to be called to cause the URL to be loaded
                 if(openWindowHidden) {
                 	dialog.hide();
-                }
-
-
-
-
-
-                // Action bar testing (fake tabs, etc)
-                if (getShowTabBar()) {
-                    ActionBar actionBar = dialog.getActionBar();
-                    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                    actionBar.setBackgroundDrawable(new ColorDrawable(0xffbc4f44));
-
-                    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-                         public void onTabSelected(Tab tab, FragmentTransaction ft) {
-                             int tabIndex = tab.getPosition();
-
-                            try {
-                                JSONObject obj = new JSONObject();
-                                obj.put("type", "toolbarItemTapped");
-                                obj.put("index", tabIndex);
-
-                                sendUpdate(obj, true);
-                            } catch (JSONException ex) {
-                                Log.d(LOG_TAG, "Should never happen");
-                            }
-                         }
-
-                         public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-                             // TODO Auto-generated method stub
-                         }
-
-                         public void onTabReselected(Tab tab, FragmentTransaction ft) {
-                             // TODO Auto-generated method stub
-                         }
-                     };
-
-                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(tabListener);
-                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(tabListener);
-                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(tabListener);
-                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(tabListener);
-
-                    //add the two tabs to the actionbar
-                    actionBar.addTab(tab1, 0, getTabBarInit() == 0 ? true : false);
-                    actionBar.addTab(tab2, 1, getTabBarInit() == 1 ? true : false);
-                    actionBar.addTab(tab3, 2, getTabBarInit() == 2 ? true : false);
-                    actionBar.addTab(tab4, 3, getTabBarInit() == 3 ? true : false);
                 }
             }
         };
