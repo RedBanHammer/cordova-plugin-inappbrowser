@@ -524,7 +524,11 @@
 
 	CGRect webViewBounds = self.view.bounds;
 	BOOL toolbarIsAtBottom = ![_browserOptions.toolbarposition isEqualToString:kInAppBrowserToolbarBarPositionTop];
-	webViewBounds.size.height -= (_browserOptions.location ? FOOTER_HEIGHT : TOOLBAR_HEIGHT) + TABBAR_HEIGHT;
+	float tabBarHeight = TABBAR_HEIGHT;
+	if ([[self platform] rangeOfString:@"iPad"].location != NSNotFound) {
+		tabBarHeight = 56.0;
+	}
+	webViewBounds.size.height -= (_browserOptions.location ? FOOTER_HEIGHT : TOOLBAR_HEIGHT) + tabBarHeight;
 	self.webView = [[UIWebView alloc] initWithFrame:webViewBounds];
 
 	self.webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
@@ -588,9 +592,14 @@
 
 
 	// Tab bar testing
-	float tabBarY = self.view.bounds.size.height - TABBAR_HEIGHT;
+	float tabBarHeight = TABBAR_HEIGHT;
+	if ([[self platform] rangeOfString:@"iPad"].location != NSNotFound) {
+		tabBarHeight = 56.0;
+	}
 
-	self.tabBar = [[UITabBar alloc] initWithFrame:CGRectMake(0, tabBarY, self.view.bounds.size.width, TABBAR_HEIGHT)];
+	float tabBarY = self.view.bounds.size.height - tabBarHeight;
+
+	self.tabBar = [[UITabBar alloc] initWithFrame:CGRectMake(0, tabBarY, self.view.bounds.size.width, tabBarHeight)];
 	NSMutableArray *tabBarItems = [[NSMutableArray alloc] init];
 
 	// Sigh, I donm't know how to reference img assets in AppGyver into the plugin
@@ -610,15 +619,31 @@
 	UIImage *tab4Img = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:tab4Base64]] scale:2];
 
 
-	UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:tab1Img tag:0];
-	UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Maps" image:tab2Img tag:1];
-	UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Forums" image:tab3Img tag:2];
-	UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Chat" image:tab4Img tag:3];
+	UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home" image:tab1Img tag:0];
+	UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"Maps" image:tab2Img tag:1];
+	UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Forums" image:tab3Img tag:2];
+	UITabBarItem *tabBarItem4 = [[UITabBarItem alloc] initWithTitle:@"Chat" image:tab4Img tag:3];
 
-	[tabBarItems addObject:tabBarItem];
+	[tab.tabBarItem1 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
+	forState:UIControlStateNormal];
+
+	[tab.tabBarItem2 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
+	forState:UIControlStateNormal];
+
+	[tab.tabBarItem3 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
+	forState:UIControlStateNormal];
+
+	[tab.tabBarItem4 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
+	forState:UIControlStateNormal];
+
 	[tabBarItems addObject:tabBarItem1];
 	[tabBarItems addObject:tabBarItem2];
 	[tabBarItems addObject:tabBarItem3];
+	[tabBarItems addObject:tabBarItem4];
 
 	self.tabBar.items = tabBarItems;
 	self.tabBar.selectedItem = [tabBarItems objectAtIndex:0];
@@ -626,14 +651,17 @@
 	self.tabBar.userInteractionEnabled = YES;
 	self.tabBar.hidden = NO;
 	self.tabBar.delegate = self;
-	self.tabBar.adjustsFontSizeToFitWidth = NO;
 
 
 
 
 
 	CGFloat labelInset = 5.0;
-	float locationBarY = toolbarIsAtBottom ? self.view.bounds.size.height - (FOOTER_HEIGHT + TABBAR_HEIGHT) : self.view.bounds.size.height - LOCATIONBAR_HEIGHT;
+	float tabBarHeight = TABBAR_HEIGHT;
+	if ([[self platform] rangeOfString:@"iPad"].location != NSNotFound) {
+		tabBarHeight = 56.0;
+	}
+	float locationBarY = toolbarIsAtBottom ? self.view.bounds.size.height - (FOOTER_HEIGHT + tabBarHeight) : self.view.bounds.size.height - LOCATIONBAR_HEIGHT;
 
 	self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelInset, locationBarY, self.view.bounds.size.width - labelInset, LOCATIONBAR_HEIGHT)];
 	self.addressLabel.adjustsFontSizeToFitWidth = NO;
@@ -716,6 +744,11 @@
 		return;
 	}
 
+	float tabBarHeight = TABBAR_HEIGHT;
+	if ([[self platform] rangeOfString:@"iPad"].location != NSNotFound) {
+		tabBarHeight = 56.0;
+	}
+
 	if (show) {
 		self.addressLabel.hidden = NO;
 
@@ -724,7 +757,7 @@
 			// put locationBar on top of the toolBar
 
 			CGRect webViewBounds = self.view.bounds;
-			webViewBounds.size.height -= FOOTER_HEIGHT + TABBAR_HEIGHT;
+			webViewBounds.size.height -= FOOTER_HEIGHT + tabBarHeight;
 			[self setWebViewFrame:webViewBounds];
 
 			locationbarFrame.origin.y = webViewBounds.size.height;
@@ -733,7 +766,7 @@
 			// no toolBar, so put locationBar at the bottom
 
 			CGRect webViewBounds = self.view.bounds;
-			webViewBounds.size.height -= LOCATIONBAR_HEIGHT + TABBAR_HEIGHT;
+			webViewBounds.size.height -= LOCATIONBAR_HEIGHT + tabBarHeight;
 			[self setWebViewFrame:webViewBounds];
 
 			locationbarFrame.origin.y = webViewBounds.size.height;
@@ -747,7 +780,7 @@
 
 			// webView take up whole height less toolBar height
 			CGRect webViewBounds = self.view.bounds;
-			webViewBounds.size.height -= TOOLBAR_HEIGHT + TABBAR_HEIGHT;
+			webViewBounds.size.height -= TOOLBAR_HEIGHT + tabBarHeight;
 			[self setWebViewFrame:webViewBounds];
 		} else {
 			// no toolBar, expand webView to screen dimensions
