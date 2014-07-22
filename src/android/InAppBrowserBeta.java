@@ -49,6 +49,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.Config;
 import org.apache.cordova.CordovaArgs;
@@ -63,7 +67,7 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class InAppBrowserBeta extends CordovaPlugin {
+public class InAppBrowserBeta extends CordovaPlugin implements ActionBar.TabListener {
 
     private static final String NULL = "null";
     protected static final String LOG_TAG = "InAppBrowserBeta";
@@ -89,6 +93,8 @@ public class InAppBrowserBeta extends CordovaPlugin {
     private String buttonLabel = "Done";
     private boolean clearAllCache= false;
     private boolean clearSessionCache=false;
+    private boolean showTabBar = true;
+    private int tabBarInit = 0;
 
     public class LoadedStatusInterface {
         @JavascriptInterface
@@ -465,9 +471,34 @@ public class InAppBrowserBeta extends CordovaPlugin {
         return this.showLocationBar;
     }
 
+    private boolean getShowTabBar() {
+        return this.showTabBar;
+    }
+
+    private int getTabBarInit() {
+        return this.tabBarInit;
+    }
+
     private InAppBrowserBeta getInAppBrowser(){
         return this;
     }
+
+
+    @Override
+    public void onTabSelected(Tab tab, FragmentTransaction transition) {
+        int tabIndex = tab.getPosition();
+
+        try {
+            JSONObject obj = new JSONObject();
+            obj.put("type", "toolbarItemTapped");
+            obj.put("index", tabIndex);
+
+            sendUpdate(obj, true);
+        } catch (JSONException ex) {
+            Log.d(LOG_TAG, "Should never happen");
+        }
+    }
+
 
     /**
      * Display a new browser with the specified URL.
@@ -519,11 +550,43 @@ public class InAppBrowserBeta extends CordovaPlugin {
 
             public void run() {
                 // Let's create the main dialog
-                dialog = new InAppBrowserBetaDialog(cordova.getActivity(), android.R.style.Theme_DeviceDefault);
+                dialog = new InAppBrowserBetaDialog(cordova.getActivity(), getShowTabBar() ? android.R.style.Theme_DeviceDefault : android.R.style.Theme_NoTitleBar);
                 dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Dialog;
-                dialog.requestWindowFeature(Window.FEATURE_ACTION_BAR);
+                dialog.requestWindowFeature(getShowTabBar() ? Window.FEATURE_ACTION_BAR : Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setInAppBroswer(getInAppBrowser());
+
+
+
+
+
+
+                // Action bar testing (fake tabs, etc)
+                if (getShowTabBar()) {
+                    ActionBar actionBar = getActionBar();
+                    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                    actionBar.setBackgroundDrawable(new ColorDrawable(0xffbc4f44));
+
+                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(this);
+                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(this);
+                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(this);
+                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(this);
+
+                    //add the two tabs to the actionbar
+                    actionBar.addTab(tab1, 0, getTabBarInit() == 0 ? true : false);
+                    actionBar.addTab(tab2, 1, getTabBarInit() == 1 ? true : false);
+                    actionBar.addTab(tab3, 2, getTabBarInit() == 2 ? true : false);
+                    actionBar.addTab(tab4, 3, getTabBarInit() == 3 ? true : false);
+                }
+
+
+
+
+
+
+
+
+
 
                 // Main container layout
                 LinearLayout main = new LinearLayout(cordova.getActivity());
