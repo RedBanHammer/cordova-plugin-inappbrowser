@@ -740,10 +740,11 @@ public class InAppBrowserBeta extends CordovaPlugin {
     }
 
     public void addCallbackInterface(WebView view) {
+        final WebView _theWebView = view;
         this.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                view.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
+                _theWebView.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
             }
         });
     }
