@@ -62,14 +62,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-public class LoadedStatusInterface {
-    @JavascriptInterface
-    @SuppressWarnings("unused")
-    public void callback(String str) {
-
-    }
-}
-
 @SuppressLint("SetJavaScriptEnabled")
 public class InAppBrowserBeta extends CordovaPlugin {
 
@@ -97,6 +89,14 @@ public class InAppBrowserBeta extends CordovaPlugin {
     private String buttonLabel = "Done";
     private boolean clearAllCache= false;
     private boolean clearSessionCache=false;
+
+    public class LoadedStatusInterface {
+        @JavascriptInterface
+        @SuppressWarnings("unused")
+        public void callback(String str) {
+
+        }
+    }
 
     /**
      * Executes the request and returns PluginResult.
@@ -215,7 +215,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
         else if (action.equals("loadedStatus")) {
             webView.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
             webView.loadUrl("javascript:window.LOADEDSTATUS.callback(document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById(//'shotbowAppPageLoaded').getAttribute('token') : 'false').toString());");
-            
+
             // This only works for 4.4 kitkat
             //webView.evaluateJavascript("(function() { return (document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById(//'shotbowAppPageLoaded').getAttribute('token') : 'false').toString(); })();", new ValueCallback<String>() {
             //    @Override
