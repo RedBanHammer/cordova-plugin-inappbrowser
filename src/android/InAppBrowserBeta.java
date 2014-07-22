@@ -98,6 +98,8 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 JSONObject obj = new JSONObject();
                 obj.put("type", "loadedStatus");
                 obj.put("loaded", s);
+
+                if (s != "false" && inAppWebView != null) inAppWebView.invalidate();
     
                 sendUpdate(obj, true);
             } catch (JSONException ex) {
@@ -225,7 +227,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 @Override
                 public void run() {
                     inAppWebView.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
-                    inAppWebView.loadUrl("javascript:window.LOADEDSTATUS.callback(document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById('shotbowAppPageLoaded').getAttribute('token') : 'false').toString();");
+                    inAppWebView.loadUrl("javascript:(typeof window.LOADEDSTATUS !== undefined ? window.LOADEDSTATUS.callback(document.getElementById('shotbowAppPageLoaded')!=null && typeof document.getElementById('shotbowAppPageLoaded').getAttribute('token') !== 'undefined' ? document.getElementById('shotbowAppPageLoaded').getAttribute('token') : 'false').toString() : 'false');");
                 }
             });
 
