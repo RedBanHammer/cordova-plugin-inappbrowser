@@ -62,6 +62,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+public class LoadedStatusInterface {
+    @JavascriptInterface
+    @SuppressWarnings("unused")
+    public void callback(String str) {
+
+    }
+}
+
 @SuppressLint("SetJavaScriptEnabled")
 public class InAppBrowserBeta extends CordovaPlugin {
 
@@ -205,20 +213,24 @@ public class InAppBrowserBeta extends CordovaPlugin {
             this.callbackContext.sendPluginResult(pluginResult);
         }
         else if (action.equals("loadedStatus")) {
-            webView.evaluateJavascript("(function() { return (document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById('shotbowAppPageLoaded').getAttribute('token') : 'false').toString(); })();", new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String s) {
-                    try {
-                        JSONObject obj = new JSONObject();
-                        obj.put("type", "loadedStatus");
-                        obj.put("loaded", s);
+            webView.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
+            webView.loadUrl("javascript:window.LOADEDSTATUS.callback(document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById(//'shotbowAppPageLoaded').getAttribute('token') : 'false').toString());");
             
-                        sendUpdate(obj, true);
-                    } catch (JSONException ex) {
-                        Log.d(LOG_TAG, "Should never happen");
-                    }
-                }
-            });
+            // This only works for 4.4 kitkat
+            //webView.evaluateJavascript("(function() { return (document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById(//'shotbowAppPageLoaded').getAttribute('token') : 'false').toString(); })();", new ValueCallback<String>() {
+            //    @Override
+            //    public void onReceiveValue(String s) {
+            //        try {
+            //            JSONObject obj = new JSONObject();
+            //            obj.put("type", "loadedStatus");
+            //            obj.put("loaded", s);
+            //
+            //            sendUpdate(obj, true);
+            //        } catch (JSONException ex) {
+            //            Log.d(LOG_TAG, "Should never happen");
+            //        }
+            //    }
+            //});
         } else if (action.equals("hide")) {
             hideDialog();
         }
