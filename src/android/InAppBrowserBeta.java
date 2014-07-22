@@ -550,7 +550,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
 
                 // Action bar testing (fake tabs, etc)
                 if (getShowTabBar()) {
-                    ActionBar actionBar = cordova.getActionBar();
+                    ActionBar actionBar = cordova.getActivity().getActionBar();
                     actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                     actionBar.setBackgroundDrawable(new ColorDrawable(0xffbc4f44));
 
