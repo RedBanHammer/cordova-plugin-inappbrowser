@@ -261,7 +261,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 // Appgyver throws an error with the edge legacy build if using reference
                 //if (Build.VERSION.SDK_INT < 19) {
                     // This action will have the side-effect of blurring the currently focused element
-                    inAppWebView.loadUrl("javascript:" + finalScriptToInject);
+                if (inAppWebView != null && finalScriptToInject != null) inAppWebView.loadUrl("javascript:" + finalScriptToInject);
                 //} else {// More appgyver errors
                     //inAppWebView.evaluateJavascript(finalScriptToInject, null);
                 //}
