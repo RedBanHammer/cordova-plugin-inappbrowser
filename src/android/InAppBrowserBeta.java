@@ -487,6 +487,48 @@ public class InAppBrowserBeta extends CordovaPlugin {
         return this;
     }
 
+    class MyTabsListener implements ActionBar.TabListener {
+        public Fragment fragment;
+
+        public MyTabsListener(Fragment fragment) {
+            this.fragment = fragment;
+        }
+
+        @Override
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+            //Toast.makeText(StartActivity.appContext, "Reselected!", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+            //ft.replace(R.id.fragment_container, fragment);
+            int tabIndex = tab.getPosition();
+
+            try {
+                JSONObject obj = new JSONObject();
+                obj.put("type", "toolbarItemTapped");
+                obj.put("index", tabIndex);
+
+                sendUpdate(obj, true);
+            } catch (JSONException ex) {
+                Log.d(LOG_TAG, "Should never happen");
+            }
+        }
+
+        @Override
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+            //ft.remove(fragment);
+        }
+    }
+
+    class AFragment extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            // Inflate the layout for this fragment
+            //return inflater.inflate(R.layout.afragment, container, false);
+        }
+    } 
+
     /**
      * Display a new browser with the specified URL.
      *
@@ -744,7 +786,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
 
                     ActionBar.TabListener tabListener = new ActionBar.TabListener() {
                          public void onTabSelected(Tab tab, FragmentTransaction ft) {
-                             int tabIndex = tab.getPosition();
+                            int tabIndex = tab.getPosition();
 
                             try {
                                 JSONObject obj = new JSONObject();
@@ -766,10 +808,10 @@ public class InAppBrowserBeta extends CordovaPlugin {
                          }
                      };
 
-                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(tabListener);
-                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(tabListener);
-                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(tabListener);
-                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(tabListener);
+                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(new MyTabsListener(new AFragment()));
+                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(new MyTabsListener(new AFragment()));
+                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(new MyTabsListener(new AFragment()));
+                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(new MyTabsListener(new AFragment()));
 
                     //add the two tabs to the actionbar
                     actionBar.addTab(tab1, 0, false);

@@ -626,6 +626,7 @@
 	self.tabBar.userInteractionEnabled = YES;
 	self.tabBar.hidden = NO;
 	self.tabBar.delegate = self;
+	self.tabBar.adjustsFontSizeToFitWidth = NO;
 
 
 
