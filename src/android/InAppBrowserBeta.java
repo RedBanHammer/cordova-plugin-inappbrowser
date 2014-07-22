@@ -50,8 +50,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.drawable.ColorDrawable;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.Config;
@@ -67,7 +71,7 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class InAppBrowserBeta extends CordovaPlugin implements ActionBar.TabListener {
+public class InAppBrowserBeta extends CordovaPlugin {
 
     private static final String NULL = "null";
     protected static final String LOG_TAG = "InAppBrowserBeta";
@@ -483,23 +487,6 @@ public class InAppBrowserBeta extends CordovaPlugin implements ActionBar.TabList
         return this;
     }
 
-
-    @Override
-    public void onTabSelected(Tab tab, FragmentTransaction transition) {
-        int tabIndex = tab.getPosition();
-
-        try {
-            JSONObject obj = new JSONObject();
-            obj.put("type", "toolbarItemTapped");
-            obj.put("index", tabIndex);
-
-            sendUpdate(obj, true);
-        } catch (JSONException ex) {
-            Log.d(LOG_TAG, "Should never happen");
-        }
-    }
-
-
     /**
      * Display a new browser with the specified URL.
      *
@@ -567,10 +554,34 @@ public class InAppBrowserBeta extends CordovaPlugin implements ActionBar.TabList
                     actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                     actionBar.setBackgroundDrawable(new ColorDrawable(0xffbc4f44));
 
-                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(this);
-                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(this);
-                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(this);
-                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(this);
+                    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+                         public void onTabSelected(Tab tab, FragmentTransaction ft) {
+                             int tabIndex = tab.getPosition();
+
+                            try {
+                                JSONObject obj = new JSONObject();
+                                obj.put("type", "toolbarItemTapped");
+                                obj.put("index", tabIndex);
+
+                                sendUpdate(obj, true);
+                            } catch (JSONException ex) {
+                                Log.d(LOG_TAG, "Should never happen");
+                            }
+                         }
+
+                         public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+                             // TODO Auto-generated method stub
+                         }
+
+                         public void onTabReselected(Tab tab, FragmentTransaction ft) {
+                             // TODO Auto-generated method stub
+                         }
+                     };
+
+                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(tabListener);
+                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(tabListener);
+                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(tabListener);
+                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(tabListener);
 
                     //add the two tabs to the actionbar
                     actionBar.addTab(tab1, 0, getTabBarInit() == 0 ? true : false);
