@@ -221,8 +221,13 @@ public class InAppBrowserBeta extends CordovaPlugin {
             this.callbackContext.sendPluginResult(pluginResult);
         }
         else if (action.equals("loadedStatus")) {
-            webView.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
-            webView.loadUrl("javascript:window.LOADEDSTATUS.callback(document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById(//'shotbowAppPageLoaded').getAttribute('token') : 'false').toString());");
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    webView.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
+                    webView.loadUrl("javascript:window.LOADEDSTATUS.callback(document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById(//'shotbowAppPageLoaded').getAttribute('token') : 'false').toString());");
+                }
+            });
 
             // This only works for 4.4 kitkat
             //webView.evaluateJavascript("(function() { return (document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById(//'shotbowAppPageLoaded').getAttribute('token') : 'false').toString(); })();", new ValueCallback<String>() {
