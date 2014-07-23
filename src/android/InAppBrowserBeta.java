@@ -59,8 +59,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.R;
-import android.os.Handler;
-import android.os.Message;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.Config;
@@ -399,16 +397,6 @@ public class InAppBrowserBeta extends CordovaPlugin {
         });
     }
 
-    private Handler handler = new Handler() {
-        @Override
-
-        public void handleMessage(Message msg) {
-            // perform logic
-            if (dialog != null) dialog.dismiss();
-            dialog = null;
-        }
-    };
-
     /**
      * Closes the dialog
      */
@@ -422,22 +410,23 @@ public class InAppBrowserBeta extends CordovaPlugin {
         this.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                /*childView.setWebViewClient(new WebViewClient() {
+                childView.setWebViewClient(new WebViewClient() {
                     // NB: wait for about:blank before dismissing
-                    // NO!
                     public void onPageFinished(WebView view, String url) {
                         if (dialog != null) {
-                            dialog.dismiss();
+                            //dialog.dismiss();
+                            dialog.hide();
                         }
                     }
-                });*/
+                });
 
                 //dialog.dismiss();
-                handler.sendEmptyMessage(0);
+                //handler.sendEmptyMessage(0);
+
                 // NB: From SDK 19: "If you call methods on WebView from any thread 
                 // other than your app's UI thread, it can cause unexpected results."
                 // http://developer.android.com/guide/webapps/migrating.html#Threads
-                //childView.loadUrl("about:blank");
+                childView.loadUrl("about:blank");
             }
         });
 
