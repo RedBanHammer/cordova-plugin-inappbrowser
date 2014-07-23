@@ -59,6 +59,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.R;
+import android.os.Handler;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.Config;
