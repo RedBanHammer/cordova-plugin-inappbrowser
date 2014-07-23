@@ -414,14 +414,14 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 dialog.hide();
             }
         });
-
+        */
         try {
             JSONObject obj = new JSONObject();
             obj.put("type", EXIT_EVENT);
             sendUpdate(obj, false);
         } catch (JSONException ex) {
             Log.d(LOG_TAG, "Should never happen");
-        }*/
+        }
     }
 
     /**
