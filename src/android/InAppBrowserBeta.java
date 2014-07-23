@@ -60,6 +60,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.R;
 import android.os.Handler;
+import android.os.Message;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.Config;
