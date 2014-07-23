@@ -401,7 +401,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
      * Closes the dialog
      */
     public void closeDialog() {
-        /*final WebView childView = this.inAppWebView;
+        final WebView childView = this.inAppWebView;
         // The JS protects against multiple calls, so this should happen only when
         // closeDialog() is called by other native code.
         if (childView == null) {
@@ -411,10 +411,25 @@ public class InAppBrowserBeta extends CordovaPlugin {
         this.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                dialog.hide();
+                childView.setWebViewClient(new WebViewClient() {
+                    // NB: wait for about:blank before dismissing
+                    public void onPageFinished(WebView view, String url) {
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+                //dialog.dismiss();
+                //handler.sendEmptyMessage(0);
+
+                // NB: From SDK 19: "If you call methods on WebView from any thread 
+                // other than your app's UI thread, it can cause unexpected results."
+                // http://developer.android.com/guide/webapps/migrating.html#Threads
+                childView.loadUrl("about:blank");
             }
         });
-        */
+
         try {
             JSONObject obj = new JSONObject();
             obj.put("type", EXIT_EVENT);
