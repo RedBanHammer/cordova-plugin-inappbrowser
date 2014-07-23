@@ -229,7 +229,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 @Override
                 public void run() {
                     dialog.show();
-                    dialog.setVisibility(View.VISIBLE);
+                    //dialog.setVisibility(View.VISIBLE);
                 }
             });
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
@@ -392,7 +392,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
         this.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (dialog != null) dialog.setVisibility(View.GONE);
+                if (dialog != null) dialog.hide();
             }
         });
     }
