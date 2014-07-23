@@ -490,81 +490,6 @@ public class InAppBrowserBeta extends CordovaPlugin {
         return this;
     }
 
-    class ActionBarTesting extends ActionBarImpl {
-        @Override
-        public void selectTab(Tab tab) {
-            if (getNavigationMode() != NAVIGATION_MODE_TABS) {
-                 mSavedTabPosition = tab != null ? tab.getPosition() : INVALID_POSITION;
-                 return;
-             }
-     
-             final FragmentTransaction trans = mActivity.getFragmentManager().beginTransaction()
-                     .disallowAddToBackStack();
-     
-             if (mSelectedTab == tab) {
-                 if (mSelectedTab != null) {
-                     mSelectedTab.getCallback().onTabReselected(mSelectedTab, trans);
-                     mTabScrollView.animateToTab(tab.getPosition());
-                 }
-             } else {
-                 mTabScrollView.setTabSelected(tab != null ? tab.getPosition() : Tab.INVALID_POSITION);
-                 if (mSelectedTab != null) {
-                     mSelectedTab.getCallback().onTabUnselected(mSelectedTab, trans);
-                 }
-                 mSelectedTab = (TabImpl) tab;
-                 if (mSelectedTab != null) {
-                     mSelectedTab.getCallback().onTabSelected(mSelectedTab, trans);
-                 }
-             }
-     
-             if (!trans.isEmpty()) {
-                 trans.commit();
-             }
-        }
-    }
-
-    class MyTabsListener implements ActionBar.TabListener {
-        public Fragment fragment;
-
-        public MyTabsListener(Fragment fragment) {
-            this.fragment = fragment;
-        }
-
-        @Override
-        public void onTabReselected(Tab tab, FragmentTransaction ft) {
-            //Toast.makeText(StartActivity.appContext, "Reselected!", Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onTabSelected(Tab tab, FragmentTransaction ft) {
-            //ft.replace(R.id.fragment_container, fragment);
-            int tabIndex = tab.getPosition();
-
-            try {
-                JSONObject obj = new JSONObject();
-                obj.put("type", "toolbarItemTapped");
-                obj.put("index", tabIndex);
-
-                sendUpdate(obj, true);
-            } catch (JSONException ex) {
-                Log.d(LOG_TAG, "Should never happen");
-            }
-        }
-
-        @Override
-        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-            //ft.remove(fragment);
-        }
-    }
-
-    class AFragment extends Fragment {
-        //@Override
-        //public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-         //   return inflater.inflate(R.layout.afragment, container, false);
-        //}
-    } 
-
     /**
      * Display a new browser with the specified URL.
      *
@@ -618,7 +543,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 dialog = new InAppBrowserBetaDialog(cordova.getActivity(), getShowTabBar() ? android.R.style.Theme_DeviceDefault : android.R.style.Theme_NoTitleBar);
                 dialog.getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
-                dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Dialog;
+                dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Activity;
                 dialog.requestWindowFeature(getShowTabBar() ? Window.FEATURE_ACTION_BAR : Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setInAppBroswer(getInAppBrowser());
@@ -631,7 +556,9 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 // Toolbar layout
                 RelativeLayout toolbar = new RelativeLayout(cordova.getActivity());
                 //Please, no more black! 
-                toolbar.setBackgroundColor(android.graphics.Color.LTGRAY);
+                //toolbar.setBackgroundColor(android.graphics.Color.LTGRAY);
+                // How about red?
+                toolbar.setBackgroundColor(android.graphics.Color.rgb(188, 79, 68));
                 toolbar.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, this.dpToPixels(44)));
                 toolbar.setPadding(this.dpToPixels(2), this.dpToPixels(2), this.dpToPixels(2), this.dpToPixels(2));
                 toolbar.setHorizontalGravity(Gravity.LEFT);
@@ -798,8 +725,9 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 
                 lp.copyFrom(dialog.getWindow().getAttributes());
+                lp.setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
                 lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT - 200;
 
                 dialog.setContentView(main);
                 dialog.show();
@@ -816,11 +744,11 @@ public class InAppBrowserBeta extends CordovaPlugin {
 
                 // Action bar testing (fake tabs, etc)
                 if (getShowTabBar()) {
-                    ActionBarTesting actionBar = dialog.getActionBar();
-                    actionBar.setNavigationMode(ActionBarTesting.NAVIGATION_MODE_TABS);
+                    ActionBar actionBar = dialog.getActionBar();
+                    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                     actionBar.setBackgroundDrawable(new ColorDrawable(0xffbc4f44));
 
-                    ActionBarTesting.TabListener tabListener = new ActionBarTesting.TabListener() {
+                    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
                          public void onTabSelected(Tab tab, FragmentTransaction ft) {
                             int tabIndex = tab.getPosition();
 
@@ -844,10 +772,10 @@ public class InAppBrowserBeta extends CordovaPlugin {
                          }
                      };
 
-                    ActionBarTesting.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(new MyTabsListener(new AFragment()));
-                    ActionBarTesting.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(new MyTabsListener(new AFragment()));
-                    ActionBarTesting.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(new MyTabsListener(new AFragment()));
-                    ActionBarTesting.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(new MyTabsListener(new AFragment()));
+                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(tabListender);
+                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(tabListender);
+                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(tabListender);
+                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(tabListender);
 
                     //add the two tabs to the actionbar
                     actionBar.addTab(tab1, 0, false);
