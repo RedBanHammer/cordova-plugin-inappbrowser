@@ -479,7 +479,8 @@ public class InAppBrowserBeta extends CordovaPlugin {
     }
 
     private boolean getShowTabBar() {
-        return this.showTabBar;
+        return false;
+        //return this.showTabBar;
     }
 
     private int getTabBarInit() {
@@ -509,14 +510,14 @@ public class InAppBrowserBeta extends CordovaPlugin {
             if (hidden != null) {
                 openWindowHidden = hidden.booleanValue();
             }
-            Boolean tabbar = features.get("tabbar");
+            /*Boolean tabbar = features.get("tabbar");
             if (tabbar != null) {
                 showTabBar = tabbar.booleanValue();
             }
             int tabbarinit = features.get("tabbarinit");
             if (tabbarinit != null) {
                 tabBarInit = tabbarinit;
-            }
+            }*/
             Boolean cache = features.get(CLEAR_ALL_CACHE);
             if (cache != null) {
                 clearAllCache = cache.booleanValue();
