@@ -397,6 +397,16 @@ public class InAppBrowserBeta extends CordovaPlugin {
         });
     }
 
+    private Handler handler = new Handler() {
+        @Override
+
+        public void handleMessage(Message msg) {
+            // perform logic
+            if (dialog != null) dialog.dismiss();
+            dialog = null
+        }
+    };
+
     /**
      * Closes the dialog
      */
@@ -420,7 +430,8 @@ public class InAppBrowserBeta extends CordovaPlugin {
                     }
                 });*/
 
-                dialog.dismiss();
+                //dialog.dismiss();
+                handler.sendEmptyMessage(0);
                 // NB: From SDK 19: "If you call methods on WebView from any thread 
                 // other than your app's UI thread, it can cause unexpected results."
                 // http://developer.android.com/guide/webapps/migrating.html#Threads
