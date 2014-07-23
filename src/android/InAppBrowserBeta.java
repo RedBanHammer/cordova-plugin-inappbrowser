@@ -427,8 +427,9 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 // other than your app's UI thread, it can cause unexpected results."
                 // http://developer.android.com/guide/webapps/migrating.html#Threads
                 childView.loadUrl("about:blank");*/
-                
+
                 dialog.hide();
+                this.inAppWebView = null;
             }
         });
 
