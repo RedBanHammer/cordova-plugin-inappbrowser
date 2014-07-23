@@ -490,39 +490,36 @@ public class InAppBrowserBeta extends CordovaPlugin {
         return this;
     }
 
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-        int tabPosition = tab.GetPosition();
-
-        if (null != mViewPager)
-        {
-            String newTitle;
-            mViewPager.setCurrentItem(tabPosition);
-
-            switch (tabPosition)
-            {
-                case 0:
-                    newTitle = getString(R.string.action_title_timeline);
-                    break;
-                case 1:
-                    newTitle = getString(R.string.action_title_mentions);
-                    break;
-                case 2:
-                    newTitle = getString(R.string.action_title_inbox);
-                    break;
-                case 3:
-                    newTitle = getString(R.string.action_title_search);
-                    break;
-                case 4:
-                    newTitle = getString(R.string.action_title_profile);
-                    break;
-            }
-
-            if  (null != newTitle && !newTitle.isEmpty())
-            {
-                setTitle(newTitle);
-            }
+    class ActionBarTesting extends ActionBarImpl {
+        @Override
+        public void selectTab(Tab tab) {
+            if (getNavigationMode() != NAVIGATION_MODE_TABS) {
+                 mSavedTabPosition = tab != null ? tab.getPosition() : INVALID_POSITION;
+                 return;
+             }
+     
+             final FragmentTransaction trans = mActivity.getFragmentManager().beginTransaction()
+                     .disallowAddToBackStack();
+     
+             if (mSelectedTab == tab) {
+                 if (mSelectedTab != null) {
+                     mSelectedTab.getCallback().onTabReselected(mSelectedTab, trans);
+                     mTabScrollView.animateToTab(tab.getPosition());
+                 }
+             } else {
+                 mTabScrollView.setTabSelected(tab != null ? tab.getPosition() : Tab.INVALID_POSITION);
+                 if (mSelectedTab != null) {
+                     mSelectedTab.getCallback().onTabUnselected(mSelectedTab, trans);
+                 }
+                 mSelectedTab = (TabImpl) tab;
+                 if (mSelectedTab != null) {
+                     mSelectedTab.getCallback().onTabSelected(mSelectedTab, trans);
+                 }
+             }
+     
+             if (!trans.isEmpty()) {
+                 trans.commit();
+             }
         }
     }
 
@@ -819,11 +816,11 @@ public class InAppBrowserBeta extends CordovaPlugin {
 
                 // Action bar testing (fake tabs, etc)
                 if (getShowTabBar()) {
-                    ActionBar actionBar = dialog.getActionBar();
-                    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                    ActionBarTesting actionBar = dialog.getActionBar();
+                    actionBar.setNavigationMode(ActionBarTesting.NAVIGATION_MODE_TABS);
                     actionBar.setBackgroundDrawable(new ColorDrawable(0xffbc4f44));
 
-                    ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+                    ActionBarTesting.TabListener tabListener = new ActionBarTesting.TabListener() {
                          public void onTabSelected(Tab tab, FragmentTransaction ft) {
                             int tabIndex = tab.getPosition();
 
@@ -847,10 +844,10 @@ public class InAppBrowserBeta extends CordovaPlugin {
                          }
                      };
 
-                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(new MyTabsListener(new AFragment()));
-                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(new MyTabsListener(new AFragment()));
-                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(new MyTabsListener(new AFragment()));
-                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(new MyTabsListener(new AFragment()));
+                    ActionBarTesting.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(new MyTabsListener(new AFragment()));
+                    ActionBarTesting.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(new MyTabsListener(new AFragment()));
+                    ActionBarTesting.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(new MyTabsListener(new AFragment()));
+                    ActionBarTesting.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(new MyTabsListener(new AFragment()));
 
                     //add the two tabs to the actionbar
                     actionBar.addTab(tab1, 0, false);
