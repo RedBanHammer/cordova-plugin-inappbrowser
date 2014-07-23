@@ -772,10 +772,10 @@ public class InAppBrowserBeta extends CordovaPlugin {
                          }
                      };
 
-                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(tabListender);
-                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(tabListender);
-                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(tabListender);
-                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(tabListender);
+                    ActionBar.Tab tab1 = actionBar.newTab().setText("Home").setTabListener(tabListener);
+                    ActionBar.Tab tab2 = actionBar.newTab().setText("Maps").setTabListener(tabListener);
+                    ActionBar.Tab tab3 = actionBar.newTab().setText("Forums").setTabListener(tabListener);
+                    ActionBar.Tab tab4 = actionBar.newTab().setText("Chat").setTabListener(tabListener);
 
                     //add the two tabs to the actionbar
                     actionBar.addTab(tab1, 0, false);
