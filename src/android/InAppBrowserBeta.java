@@ -550,9 +550,10 @@ public class InAppBrowserBeta extends CordovaPlugin {
             public void run() {
                 // Let's create the main dialog
                 dialog = new InAppBrowserBetaDialog(cordova.getActivity(), getShowTabBar() ? android.R.style.Theme_DeviceDefault : android.R.style.Theme_NoTitleBar);
-                dialog.getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+                
+                if (getShowTabBar()) dialog.getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
-                dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Activity;
+                dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Dialog;
                 dialog.requestWindowFeature(getShowTabBar() ? Window.FEATURE_ACTION_BAR : Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setInAppBroswer(getInAppBrowser());
