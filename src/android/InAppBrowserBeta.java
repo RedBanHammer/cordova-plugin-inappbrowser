@@ -407,6 +407,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
         if (childView == null) {
             return;
         }
+        this.inAppWebView = null;
         this.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -429,7 +430,6 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 childView.loadUrl("about:blank");*/
 
                 dialog.hide();
-                this.inAppWebView = null;
             }
         });
 
