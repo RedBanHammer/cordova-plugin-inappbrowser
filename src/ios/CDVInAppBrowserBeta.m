@@ -625,19 +625,19 @@
 	UITabBarItem *tabBarItem4 = [[UITabBarItem alloc] initWithTitle:@"Chat" image:tab4Img tag:3];
 
 	[tabBarItem1 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
+	[UIFont fontWithName:@"Helvetica" size:10.0], UITextAttributeFont, nil]
 	forState:UIControlStateNormal];
 
 	[tabBarItem2 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
+	[UIFont fontWithName:@"Helvetica" size:10.0], UITextAttributeFont, nil]
 	forState:UIControlStateNormal];
 
 	[tabBarItem3 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
+	[UIFont fontWithName:@"Helvetica" size:10.0], UITextAttributeFont, nil]
 	forState:UIControlStateNormal];
 
 	[tabBarItem4 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
+	[UIFont fontWithName:@"Helvetica" size:10.0], UITextAttributeFont, nil]
 	forState:UIControlStateNormal];
 
 	[tabBarItems addObject:tabBarItem1];
