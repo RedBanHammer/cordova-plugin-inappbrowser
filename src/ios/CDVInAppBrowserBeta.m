@@ -657,7 +657,7 @@
 
 
 	CGFloat labelInset = 5.0;
-	float tabBarHeight = TABBAR_HEIGHT;
+	tabBarHeight = TABBAR_HEIGHT;
 	if ([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].location != NSNotFound) {
 		tabBarHeight = 56.0;
 	}

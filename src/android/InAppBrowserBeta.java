@@ -403,7 +403,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
         public void handleMessage(Message msg) {
             // perform logic
             if (dialog != null) dialog.dismiss();
-            dialog = null
+            dialog = null;
         }
     };
 
