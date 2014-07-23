@@ -525,7 +525,7 @@
 	CGRect webViewBounds = self.view.bounds;
 	BOOL toolbarIsAtBottom = ![_browserOptions.toolbarposition isEqualToString:kInAppBrowserToolbarBarPositionTop];
 	float tabBarHeight = TABBAR_HEIGHT;
-	if ([[[UIDevice currentDevice] platform] rangeOfString:@"iPad"].location != NSNotFound) {
+	if ([[[UIDevice currentDevice].model] rangeOfString:@"iPad"].location != NSNotFound) {
 		tabBarHeight = 56.0;
 	}
 	webViewBounds.size.height -= (_browserOptions.location ? FOOTER_HEIGHT : TOOLBAR_HEIGHT) + tabBarHeight;
@@ -593,7 +593,7 @@
 
 	// Tab bar testing
 	float tabBarHeight = TABBAR_HEIGHT;
-	if ([[[UIDevice currentDevice] platform] rangeOfString:@"iPad"].location != NSNotFound) {
+	if ([[[UIDevice currentDevice].model] rangeOfString:@"iPad"].location != NSNotFound) {
 		tabBarHeight = 56.0;
 	}
 
@@ -624,19 +624,19 @@
 	UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"Forums" image:tab3Img tag:2];
 	UITabBarItem *tabBarItem4 = [[UITabBarItem alloc] initWithTitle:@"Chat" image:tab4Img tag:3];
 
-	[tab.tabBarItem1 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	[tabBarItem1 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
 	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
 	forState:UIControlStateNormal];
 
-	[tab.tabBarItem2 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	[tabBarItem2 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
 	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
 	forState:UIControlStateNormal];
 
-	[tab.tabBarItem3 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	[tabBarItem3 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
 	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
 	forState:UIControlStateNormal];
 
-	[tab.tabBarItem4 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+	[tabBarItem4 setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
 	[UIFont fontWithName:@"Helvetica" size:12.0], UITextAttributeFont, nil]
 	forState:UIControlStateNormal];
 
@@ -658,7 +658,7 @@
 
 	CGFloat labelInset = 5.0;
 	float tabBarHeight = TABBAR_HEIGHT;
-	if ([[[UIDevice currentDevice] platform] rangeOfString:@"iPad"].location != NSNotFound) {
+	if ([[[UIDevice currentDevice].model] rangeOfString:@"iPad"].location != NSNotFound) {
 		tabBarHeight = 56.0;
 	}
 	float locationBarY = toolbarIsAtBottom ? self.view.bounds.size.height - (FOOTER_HEIGHT + tabBarHeight) : self.view.bounds.size.height - LOCATIONBAR_HEIGHT;
@@ -745,7 +745,7 @@
 	}
 
 	float tabBarHeight = TABBAR_HEIGHT;
-	if ([[[UIDevice currentDevice] platform] rangeOfString:@"iPad"].location != NSNotFound) {
+	if ([[[UIDevice currentDevice].model] rangeOfString:@"iPad"].location != NSNotFound) {
 		tabBarHeight = 56.0;
 	}
 

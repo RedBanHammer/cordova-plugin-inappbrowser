@@ -112,7 +112,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 obj.put("type", "loadedStatus");
                 obj.put("loaded", s);
 
-                if (s != "false" && inAppWebView != null) inAppWebView.invalidate();
+                //if (s != "false" && inAppWebView != null) inAppWebView.invalidate();
     
                 sendUpdate(obj, true);
             } catch (JSONException ex) {
@@ -736,12 +736,12 @@ public class InAppBrowserBeta extends CordovaPlugin {
 
                 lp.copyFrom(dialog.getWindow().getAttributes());
                 lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                lp.height = WindowManager.LayoutParams.MATCH_PARENT - 200;
+                lp.height = WindowManager.LayoutParams.MATCH_PARENT;
 
                 dialog.setContentView(main);
                 dialog.show();
                 dialog.getWindow().setAttributes(lp);
-                //dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
                 // the goal of openhidden is to load the url and not display it
                 // Show() needs to be called to cause the URL to be loaded
                 if(openWindowHidden) {
