@@ -509,6 +509,14 @@ public class InAppBrowserBeta extends CordovaPlugin {
             if (hidden != null) {
                 openWindowHidden = hidden.booleanValue();
             }
+            Boolean tabbar = features.get("tabbar");
+            if (tabbar != null) {
+                showTabBar = tabbar.booleanValue();
+            }
+            int tabbarinit = features.get("tabbarinit");
+            if (tabbarinit != null) {
+                tabBarInit = tabbarinit;
+            }
             Boolean cache = features.get(CLEAR_ALL_CACHE);
             if (cache != null) {
                 clearAllCache = cache.booleanValue();
