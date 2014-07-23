@@ -229,6 +229,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 @Override
                 public void run() {
                     dialog.show();
+                    dialog.setVisibility(View.VISIBLE);
                 }
             });
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
@@ -391,7 +392,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
         this.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (dialog != null) dialog.hide();
+                if (dialog != null) dialog.setVisibility(View.GONE);
             }
         });
     }
@@ -583,7 +584,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
 
                 // Back button
                 Button back = new Button(cordova.getActivity());
-                RelativeLayout.LayoutParams backLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+                RelativeLayout.LayoutParams backLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                 backLayoutParams.addRule(RelativeLayout.ALIGN_LEFT);
                 back.setLayoutParams(backLayoutParams);
                 back.setContentDescription("Back Button");
@@ -610,7 +611,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
 
                 // Forward button
                 Button forward = new Button(cordova.getActivity());
-                RelativeLayout.LayoutParams forwardLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+                RelativeLayout.LayoutParams forwardLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                 forwardLayoutParams.addRule(RelativeLayout.RIGHT_OF, 2);
                 forward.setLayoutParams(forwardLayoutParams);
                 forward.setContentDescription("Forward Button");
@@ -641,6 +642,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 edittext.setId(4);
                 edittext.setSingleLine(true);
                 edittext.setText(url);
+                edittext.setVisibility(View.GONE);
                 edittext.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
                 edittext.setImeOptions(EditorInfo.IME_ACTION_GO);
                 edittext.setInputType(InputType.TYPE_NULL); // Will not except input... Makes the text NON-EDITABLE
@@ -657,7 +659,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
 
                 // Close button
                 Button close = new Button(cordova.getActivity());
-                RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+                RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                 closeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 close.setLayoutParams(closeLayoutParams);
                 forward.setContentDescription("Close Button");
