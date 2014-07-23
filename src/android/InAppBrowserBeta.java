@@ -407,7 +407,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
         if (childView == null) {
             return;
         }
-        this.inAppWebView = null;
+
         this.cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
