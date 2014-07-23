@@ -525,7 +525,7 @@
 	CGRect webViewBounds = self.view.bounds;
 	BOOL toolbarIsAtBottom = ![_browserOptions.toolbarposition isEqualToString:kInAppBrowserToolbarBarPositionTop];
 	float tabBarHeight = TABBAR_HEIGHT;
-	if ([[self platform] rangeOfString:@"iPad"].location != NSNotFound) {
+	if ([[[UIDevice currentDevice] platform] rangeOfString:@"iPad"].location != NSNotFound) {
 		tabBarHeight = 56.0;
 	}
 	webViewBounds.size.height -= (_browserOptions.location ? FOOTER_HEIGHT : TOOLBAR_HEIGHT) + tabBarHeight;
@@ -593,7 +593,7 @@
 
 	// Tab bar testing
 	float tabBarHeight = TABBAR_HEIGHT;
-	if ([[self platform] rangeOfString:@"iPad"].location != NSNotFound) {
+	if ([[[UIDevice currentDevice] platform] rangeOfString:@"iPad"].location != NSNotFound) {
 		tabBarHeight = 56.0;
 	}
 
@@ -658,7 +658,7 @@
 
 	CGFloat labelInset = 5.0;
 	float tabBarHeight = TABBAR_HEIGHT;
-	if ([[self platform] rangeOfString:@"iPad"].location != NSNotFound) {
+	if ([[[UIDevice currentDevice] platform] rangeOfString:@"iPad"].location != NSNotFound) {
 		tabBarHeight = 56.0;
 	}
 	float locationBarY = toolbarIsAtBottom ? self.view.bounds.size.height - (FOOTER_HEIGHT + tabBarHeight) : self.view.bounds.size.height - LOCATIONBAR_HEIGHT;
@@ -745,7 +745,7 @@
 	}
 
 	float tabBarHeight = TABBAR_HEIGHT;
-	if ([[self platform] rangeOfString:@"iPad"].location != NSNotFound) {
+	if ([[[UIDevice currentDevice] platform] rangeOfString:@"iPad"].location != NSNotFound) {
 		tabBarHeight = 56.0;
 	}
 
