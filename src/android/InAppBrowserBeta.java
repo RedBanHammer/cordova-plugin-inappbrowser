@@ -490,6 +490,42 @@ public class InAppBrowserBeta extends CordovaPlugin {
         return this;
     }
 
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+        int tabPosition = tab.GetPosition();
+
+        if (null != mViewPager)
+        {
+            String newTitle;
+            mViewPager.setCurrentItem(tabPosition);
+
+            switch (tabPosition)
+            {
+                case 0:
+                    newTitle = getString(R.string.action_title_timeline);
+                    break;
+                case 1:
+                    newTitle = getString(R.string.action_title_mentions);
+                    break;
+                case 2:
+                    newTitle = getString(R.string.action_title_inbox);
+                    break;
+                case 3:
+                    newTitle = getString(R.string.action_title_search);
+                    break;
+                case 4:
+                    newTitle = getString(R.string.action_title_profile);
+                    break;
+            }
+
+            if  (null != newTitle && !newTitle.isEmpty())
+            {
+                setTitle(newTitle);
+            }
+        }
+    }
+
     class MyTabsListener implements ActionBar.TabListener {
         public Fragment fragment;
 
