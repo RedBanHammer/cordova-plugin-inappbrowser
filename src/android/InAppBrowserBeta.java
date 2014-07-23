@@ -241,7 +241,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 @Override
                 public void run() {
                     inAppWebView.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
-                    inAppWebView.loadUrl("javascript:try { window.LOADEDSTATUS.callback(document.getElementById('shotbowAppPageLoaded').getAttribute('token').toString()); } catch(e) { 'false'; };");
+                    inAppWebView.loadUrl("javascript:try { window.LOADEDSTATUS.callback(document.getElementById('shotbowAppPageLoaded').getAttribute('token').toString()); } catch(e) {};");
                 }
             });
 
