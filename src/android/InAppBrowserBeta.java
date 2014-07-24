@@ -748,7 +748,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 dialog.setContentView(main);
                 dialog.show();
                 dialog.getWindow().setAttributes(lp);
-                dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+                //dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED, WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
                 // the goal of openhidden is to load the url and not display it
                 // Show() needs to be called to cause the URL to be loaded
                 if(openWindowHidden) {
