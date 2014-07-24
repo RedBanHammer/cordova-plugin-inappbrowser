@@ -259,6 +259,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 @Override
                 public void run() {
                     inAppWebView.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
+                    addCallbackInterface(inAppWebView);
                     inAppWebView.loadUrl("javascript:setTimeout(function() { try { var s = document.getElementById('shotbowAppPageLoaded').getAttribute('token').toString(); console.log('~$~$~$~$~$~Sending loadedStatus callback: ' + s); window.LOADEDSTATUS.callback(s); } catch(e) { console.log('$$$$$$$$ERROR TRYING TO EXEC LOADEDSTATUS CALLBACK: ' + e.message); } }, 150);");
                 }
             });
@@ -268,6 +269,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 @Override
                 public void run() {
                     inAppWebView.addJavascriptInterface(new NotifyStatusInterface(), "NOTIFYSTATUS");
+                    addCallbackInterfaceNotify(inAppWebView);
                     inAppWebView.loadUrl("javascript:setTimeout(function() { try { var s = (typeof shotbowAppNotify !== 'undefined' ? shotbowAppNotify : false).toString(); shotbowAppNotify = false; console.log('~$~$~$~$~$~Sending notifyStatus callback: ' + s); window.NOTIFYSTATUS.callback(s); } catch(e) { console.log('$$$$$$$$ERROR TRYING TO EXEC NOTIFYSTATUS CALLBACK: ' + e.message); } }, 150);");
                 }
             });
@@ -957,6 +959,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
             }
 
             addCallbackInterface(view);
+            addCallbackInterfaceNotify(view);
             
 
             try {
