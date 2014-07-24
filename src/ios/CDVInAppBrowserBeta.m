@@ -80,6 +80,19 @@
 	}
 }
 
+- (void)notifyStatus:(CDVInvokedUrlCommand*)command
+{
+	if (self.callbackId != nil) {
+		NSString* notify = [self.inAppBrowserViewController.webView stringByEvaluatingJavaScriptFromString:@"var s = (typeof shotbowAppNotify !== 'undefined' ? shotbowAppNotify : false).toString(); shotbowAppNotify = false; s;"];
+
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+													  messageAsDictionary:@{@"type":@"notifyStatus", @"notify":notify}];
+		[pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:self.callbackId];
+	}
+}
+
 - (void)close:(CDVInvokedUrlCommand*)command
 {
 	if (self.inAppBrowserViewController == nil) {

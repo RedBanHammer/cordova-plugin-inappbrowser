@@ -36,6 +36,7 @@
 - (void)close:(CDVInvokedUrlCommand*)command;
 - (void)hide:(CDVInvokedUrlCommand*)command;
 - (void)loadedStatus:(CDVInvokedUrlCommand*)command;
+- (void)notifyStatus:(CDVInvokedUrlCommand*)command;
 - (void)injectScriptCode:(CDVInvokedUrlCommand*)command;
 - (void)show:(CDVInvokedUrlCommand*)command;
 

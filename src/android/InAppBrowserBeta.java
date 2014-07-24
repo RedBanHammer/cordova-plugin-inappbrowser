@@ -121,6 +121,24 @@ public class InAppBrowserBeta extends CordovaPlugin {
         }
     }
 
+    public class NotifyStatusInterface {
+        @JavascriptInterface
+        @SuppressWarnings("unused")
+        public void callback(String s) {
+            try {
+                JSONObject obj = new JSONObject();
+                obj.put("type", "notifyStatus");
+                obj.put("notify", s);
+
+                //if (s != "false" && inAppWebView != null) inAppWebView.invalidate();
+    
+                sendUpdate(obj, true);
+            } catch (JSONException ex) {
+                Log.d(LOG_TAG, "Should never happen");
+            }
+        }
+    }
+
     /**
      * Executes the request and returns PluginResult.
      *
@@ -241,25 +259,18 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 @Override
                 public void run() {
                     inAppWebView.addJavascriptInterface(new LoadedStatusInterface(), "LOADEDSTATUS");
-                    inAppWebView.loadUrl("javascript:setTimeout(function() { try { var s = document.getElementById('shotbowAppPageLoaded').getAttribute('token').toString(); console.log('~$~$~$~$~$~Sending callback: ' + s); window.LOADEDSTATUS.callback(s); } catch(e) { console.log('$$$$$$$$ERROR TRYING TO EXEC CALLBACK: ' + e.message); } }, 150);");
+                    inAppWebView.loadUrl("javascript:setTimeout(function() { try { var s = document.getElementById('shotbowAppPageLoaded').getAttribute('token').toString(); console.log('~$~$~$~$~$~Sending loadedStatus callback: ' + s); window.LOADEDSTATUS.callback(s); } catch(e) { console.log('$$$$$$$$ERROR TRYING TO EXEC LOADEDSTATUS CALLBACK: ' + e.message); } }, 150);");
                 }
             });
-
-            // This only works for 4.4 kitkat
-            //webView.evaluateJavascript("(function() { return (document.getElementById('shotbowAppPageLoaded')!=null ? document.getElementById(//'shotbowAppPageLoaded').getAttribute('token') : 'false').toString(); })();", new ValueCallback<String>() {
-            //    @Override
-            //    public void onReceiveValue(String s) {
-            //        try {
-            //            JSONObject obj = new JSONObject();
-            //            obj.put("type", "loadedStatus");
-            //            obj.put("loaded", s);
-            //
-            //            sendUpdate(obj, true);
-            //        } catch (JSONException ex) {
-            //            Log.d(LOG_TAG, "Should never happen");
-            //        }
-            //    }
-            //});
+        }
+        else if (action.equals("notifyStatus")) {
+            this.cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    inAppWebView.addJavascriptInterface(new NotifyStatusInterface(), "NOTIFYSTATUS");
+                    inAppWebView.loadUrl("javascript:setTimeout(function() { try { var s = (typeof shotbowAppNotify !== 'undefined' ? shotbowAppNotify : false).toString(); shotbowAppNotify = false; console.log('~$~$~$~$~$~Sending notifyStatus callback: ' + s); window.NOTIFYSTATUS.callback(s); } catch(e) { console.log('$$$$$$$$ERROR TRYING TO EXEC NOTIFYSTATUS CALLBACK: ' + e.message); } }, 150);");
+                }
+            });
         } else if (action.equals("hide")) {
             hideDialog();
         }
@@ -841,6 +852,17 @@ public class InAppBrowserBeta extends CordovaPlugin {
             }
         });
     }
+
+    public void addCallbackInterfaceNotify(WebView view) {
+        final WebView _theWebView = view;
+        this.cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                _theWebView.addJavascriptInterface(new NotifyStatusInterface(), "NOTIFYSTATUS");
+            }
+        });
+    }
+
 
 
     

@@ -30,6 +30,7 @@ function InAppBrowserBeta() {
         'loadstop' : channel.create('loadstop'),
         'loaderror' : channel.create('loaderror'),
         'loadedStatus' : channel.create('loadedStatus'),
+        'notifyStatus' : channel.create('notifyStatus'),
         'exit' : channel.create('exit'),
         'toolbarItemTapped' : channel.create('toolbarItemTapped')
    };
@@ -52,6 +53,9 @@ InAppBrowserBeta.prototype = {
     },
     loadedStatus: function (eventname) {
         exec(null, null, "InAppBrowserBeta", "loadedStatus", []);
+    },
+    notifyStatus: function (eventname) {
+        exec(null, null, "InAppBrowserBeta", "notifyStatus", []);
     },
     addEventListener: function (eventname,f) {
         if (eventname in this.channels) {
