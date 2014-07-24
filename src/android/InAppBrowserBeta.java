@@ -270,7 +270,7 @@ public class InAppBrowserBeta extends CordovaPlugin {
                 public void run() {
                     inAppWebView.addJavascriptInterface(new NotifyStatusInterface(), "NOTIFYSTATUS");
                     addCallbackInterfaceNotify(inAppWebView);
-                    inAppWebView.loadUrl("javascript:clearInterval(shotbowAppNotifyStatusInterval); shotbowAppNotifyStatusInterval = setInterval(function() { try { var s = (typeof shotbowAppNotify !== 'undefined' ? shotbowAppNotify : false).toString(); shotbowAppNotify = false; console.log('~$~$~$~$~$~Sending notifyStatus callback: ' + s); window.NOTIFYSTATUS.callback(s); } catch(e) { console.log('$$$$$$$$ERROR TRYING TO EXEC NOTIFYSTATUS CALLBACK: ' + e.message); } }, 1000);");
+                    inAppWebView.loadUrl("javascript:if (typeof shotbowAppNotifyStatusInterval !== 'undefined') { clearInterval(shotbowAppNotifyStatusInterval); } shotbowAppNotifyStatusInterval = setInterval(function() { try { var s = (typeof shotbowAppNotify !== 'undefined' ? shotbowAppNotify : false).toString(); shotbowAppNotify = false; console.log('~$~$~$~$~$~Sending notifyStatus callback: ' + s); window.NOTIFYSTATUS.callback(s); } catch(e) { console.log('$$$$$$$$ERROR TRYING TO EXEC NOTIFYSTATUS CALLBACK: ' + e.message); } }, 1000);");
                 }
             });
         } else if (action.equals("hide")) {
