@@ -671,6 +671,7 @@
 	self.tabBar.userInteractionEnabled = YES;
 	self.tabBar.hidden = NO;
 	self.tabBar.delegate = self;
+	self.tabBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
 
 
 
@@ -1236,6 +1237,30 @@
 
 	return YES;
 }
+
+/*- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self performSelector:@selector(resizeTabBarViews) withObject:nil afterDelay:(0.5f * duration)];
+}
+
+- (void)resizeTabBarViews {
+    tabBarHeight = TABBAR_HEIGHT;
+	if ([[[UIDevice currentDevice] model] rangeOfString:@"iPad"].location != NSNotFound) {
+		tabBarHeight = 56.0;
+	}
+
+	float tabBarY = self.view.bounds.size.height - tabBarHeight;
+
+	self.tabBar = [[UITabBar alloc] initWithFrame:CGRectMake(0, tabBarY, self.view.bounds.size.width, tabBarHeight)];
+
+    // Resize containerView accordingly.
+    CGRect containerViewRect = self.containerView.frame;
+    containerViewRect.origin.y = CGRectGetMaxY(self.navigationBar.frame);
+    containerViewRect.size.height = CGRectGetMaxY(self.view.frame) - containerViewRect.origin.y;
+    self.containerView.frame = containerViewRect;
+
+    [tabBar setFrame:tabBarBounds];
+    [self.webView setFrame:webViewBounds];
+}*/
 
 
 @end
