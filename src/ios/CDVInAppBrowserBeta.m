@@ -258,6 +258,14 @@
 								   initWithRootViewController:self.inAppBrowserViewController];
 	nav.orientationDelegate = self.inAppBrowserViewController;
 	nav.navigationBarHidden = YES;
+
+	// For tab bar orientation fixing
+
+	CDVInAppBrowserBetaTabBarController* tab = [[CDVInAppBrowserBetaTabBarController alloc]
+								   initWithRootViewController:self.inAppBrowserViewController];
+	tab.orientationDelegate = self.inAppBrowserViewController;
+	//tab.navigationBarHidden = YES;
+
 	// Run later to avoid the "took a long time" log message.
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if (self.inAppBrowserViewController != nil) {
@@ -1167,6 +1175,40 @@
 @end
 
 @implementation CDVInAppBrowserBetaNavigationController : UINavigationController
+
+#pragma mark CDVScreenOrientationDelegate
+
+- (BOOL)shouldAutorotate
+{
+	if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(shouldAutorotate)]) {
+		return [self.orientationDelegate shouldAutorotate];
+	}
+	return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+	if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(supportedInterfaceOrientations)]) {
+		return [self.orientationDelegate supportedInterfaceOrientations];
+	}
+
+	return 1 << UIInterfaceOrientationPortrait;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(shouldAutorotateToInterfaceOrientation:)]) {
+		return [self.orientationDelegate shouldAutorotateToInterfaceOrientation:interfaceOrientation];
+	}
+
+	return YES;
+}
+
+
+@end
+
+
+@implementation CDVInAppBrowserBetaTabBarController : UITabBarController
 
 #pragma mark CDVScreenOrientationDelegate
 
