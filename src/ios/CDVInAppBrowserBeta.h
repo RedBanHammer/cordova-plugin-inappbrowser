@@ -108,3 +108,9 @@
 
 @end
 
+@interface CDVInAppBrowserBetaTabBarController : UITabBarController
+
+@property (nonatomic, weak) id <CDVScreenOrientationDelegate> orientationDelegate;
+
+@end
+
