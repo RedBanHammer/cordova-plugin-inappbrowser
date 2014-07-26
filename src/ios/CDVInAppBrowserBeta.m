@@ -261,7 +261,7 @@
 
 	// For tab bar orientation fixing
 
-	CDVInAppBrowserBetaTabBarController* tab = [[CDVInAppBrowserBetaTabBarController alloc]];
+	CDVInAppBrowserBetaTabBarController* tab = [CDVInAppBrowserBetaTabBarController alloc];
 	tab.orientationDelegate = self.inAppBrowserViewController;
 	//tab.navigationBarHidden = YES;
 
